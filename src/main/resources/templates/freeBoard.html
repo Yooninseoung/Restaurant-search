@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>자유 게시판</title>
@@ -58,6 +58,7 @@
 
 <table class="table" style=" width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
     <h1 style="margin-left: 150px; margin-top: 50px;  margin-bottom: 25px;" >자유 게시판</h1>
+    <div style="float:right; margin-right:200px;"><button type="button" class="btn btn-outline-secondary" >글 작성</button></div>
     <thead>
     <tr>
         <th scope="col">번호</th>
@@ -67,34 +68,16 @@
     </tr>
     </thead>
     <tbody>
-    <!-- 반복 설정 필요 -->
+    <!-- 더 세분화 필요 -->
+    <div th:each="item:${post}">
     <tr>
         <td>1</td>
-        <td>안녕</td>
+        <td th:text="${item}">안녕</td>
         <td>인성</td>
         <td>2024.7.7</td>
     </tr>
+    </div>
 
-    <tr>
-        <td>2</td>
-        <td>가입 인사</td>
-        <td>민수</td>
-        <td>2024.7.7</td>
-    </tr>
-
-    <tr>
-        <td>3</td>
-        <td>안녕하세요</td>
-        <td>민우</td>
-        <td>2024.7.7</td>
-    </tr>
-
-    <tr>
-        <td>4</td>
-        <td>ㅎㅇㅎㅇ</td>
-        <td>태경</td>
-        <td>2024.7.7</td>
-    </tr>
 
     </tbody>
 </table>
