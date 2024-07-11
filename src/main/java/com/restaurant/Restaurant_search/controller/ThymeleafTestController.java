@@ -16,7 +16,7 @@ public class ThymeleafTestController {
         post.add("3번째 글입니다.");
         post.add("4번째 글입니다.");
         model.addAttribute("post", post);
-        return "freeBoard";
+        return "board/freeBoard";
     }
 
     @RequestMapping("/restaurantScreen")
@@ -33,12 +33,12 @@ public class ThymeleafTestController {
 
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("post", post);
-        return "restaurantScreen";
+        return "restaurant/restaurantScreen";
     }
 
     @RequestMapping("/login")
     public String login(Model model){
-        return "login";
+        return "login/login";
     }
 
 
