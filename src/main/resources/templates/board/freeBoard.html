@@ -28,6 +28,11 @@
                 margin-top: 20px; /* Adjust margin as needed */
             }
         }
+
+        .text-link {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
@@ -37,7 +42,7 @@
         <div class="container">
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                <strong>맛집</strong>
+                <strong>GangwonCook</strong>
             </a>
 
             <form class="d-flex" role="search">
@@ -58,8 +63,10 @@
 
 <table class="table" style=" width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
     <h1 style="margin-left: 150px; margin-top: 50px;  margin-bottom: 25px;" >자유 게시판</h1>
+
     <div style="float:right; margin-right:200px;"><button type="button" class="btn btn-outline-secondary" >글 작성</button></div>
     <thead>
+    <div style="margin-left: 150px;"><a href="#" class="text-link">최신순</a> | <a href="#" class="text-link">인기순</a> </div>
     <tr>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
