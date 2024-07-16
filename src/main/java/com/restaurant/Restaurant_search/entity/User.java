@@ -1,13 +1,17 @@
 package com.restaurant.Restaurant_search.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
 @Table(name = "User")
+@NoArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userID")
     private Integer userID;
 
@@ -28,6 +32,16 @@ public class User {
 
     @Column(name = "address", columnDefinition = "TEXT")
     private String address;
+
+    public User(String username, String password, String nickname, String fullName, String phoneNumber, String address) {
+
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 
     // Getters and Setters
 

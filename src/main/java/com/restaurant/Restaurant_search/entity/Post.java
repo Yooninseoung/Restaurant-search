@@ -1,13 +1,17 @@
 package com.restaurant.Restaurant_search.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.sql.Timestamp;
 
 @Entity
+@Data
 @Table(name = "Post")
 public class Post {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "postID")
     private Integer postID;
 

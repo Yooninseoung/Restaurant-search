@@ -1,14 +1,17 @@
 package com.restaurant.Restaurant_search.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Entity
+@Data
 @Table(name = "Restaurant")
 public class Restaurant {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "restaurantID")
     private Integer restaurantID;
 

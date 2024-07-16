@@ -1,4 +1,4 @@
-package com.restaurant.Restaurant_search.controller;
+package com.restaurant.Restaurant_search.test;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
