@@ -1,6 +1,7 @@
 package com.restaurant.Restaurant_search.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -44,6 +45,14 @@ public class Restaurant {
 
     @Column(name = "photo_path", length = 200)
     private String photoPath;
+
+    public Restaurant( String restaurantName, String phoneNumber, String address, String menu) {
+
+        this.restaurantName = restaurantName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.menu = menu;
+    }
 
     // Getters and Setters
 }

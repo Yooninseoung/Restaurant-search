@@ -35,6 +35,16 @@ dependencies {
 	testImplementation 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+	//spring-batch 라이브러리, csv->db를 하기위해 추가
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	//implementation 'org.springframework.batch:spring-batch-core:4.3.7'
+
+
+	//swagger api문서를 작성하기위한 애노테이션
+	implementation 'io.swagger:swagger-annotations:1.6.2'
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
 
 }
 
