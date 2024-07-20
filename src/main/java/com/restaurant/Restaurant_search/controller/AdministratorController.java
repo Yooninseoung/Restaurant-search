@@ -13,7 +13,7 @@ public class AdministratorController {
 
     @Autowired
     private JavaReadCsvService javaReadCsvService;
-    @RequestMapping("/csvToDb") //원주기 식당 csv 파일을 db에 저장
+    @RequestMapping("/csvToDb") //원주시 식당 csv 파일을 db에 저장
     public String csv(Model model){
         javaReadCsvService.readCSV();
         return "index";

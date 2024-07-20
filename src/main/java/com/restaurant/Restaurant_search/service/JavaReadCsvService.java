@@ -28,9 +28,9 @@ public class JavaReadCsvService { //공공데이터 포털에서 제공하는 �
                 List<String> aLine = new ArrayList<String>();
                 String[] lineArr = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
                 aLine = Arrays.asList(lineArr);
-                //restaurant = new Restaurant(lineArr[1],lineArr[6],lineArr[3],lineArr[7]);
-                //csvRepository.save(restaurant);
-                System.out.println(lineArr[0]);
+                restaurant = new Restaurant(lineArr[1],lineArr[6],lineArr[3],lineArr[7]);
+                csvRepository.save(restaurant);
+                //System.out.println(lineArr[0]);
             }
         } catch (Exception e) {
             System.out.println(e);

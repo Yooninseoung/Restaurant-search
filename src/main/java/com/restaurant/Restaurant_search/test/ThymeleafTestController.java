@@ -41,6 +41,10 @@ public class ThymeleafTestController {
         return "login/login";
     }
 
+    @RequestMapping("/sign")
+    public String sign(Model model){
+        return "login/signup";
+    }
 
 
 

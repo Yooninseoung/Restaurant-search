@@ -11,9 +11,8 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userID")
-    private Integer userID;
+    private String userID;
 
     @Column(name = "username", nullable = false, length = 50)
     private String username;
@@ -24,32 +23,28 @@ public class User {
     @Column(name = "nickname", length = 50)
     private String nickname;
 
-    @Column(name = "full_name", length = 100)
-    private String fullName;
-
     @Column(name = "phone_number", length = 20)
-    private String phoneNumber;
+    private String phone_number;
 
     @Column(name = "address", columnDefinition = "TEXT")
     private String address;
 
-    public User(String username, String password, String nickname, String fullName, String phoneNumber, String address) {
-
+    public User(String userID, String username, String password, String nickname, String phone_number, String address) {
+        this.userID = userID;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
+        this.phone_number = phone_number;
         this.address = address;
     }
 
     // Getters and Setters
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -77,20 +72,13 @@ public class User {
         this.nickname = nickname;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phone_number;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phone_Number) {
+        this.phone_number = phone_Number;
     }
 
     public String getAddress() {

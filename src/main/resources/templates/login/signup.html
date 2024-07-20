@@ -20,27 +20,31 @@
 
 <div class="container" >
 
-    <form class="row g-3" method="post" action="#">
+    <form class="row g-3" method="post" action="/user/signUp">
         <h1 align="center">회원가입</h1>
         <div class="col-md-6">
             <label for="uId" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="uId" name="uId">
+            <input type="text" class="form-control" id="uId" name="userID">
         </div>
         <div class="col-md-6">
             <label for="uPassword" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="uPassword" name="uPassword">
+            <input type="password" class="form-control" id="uPassword" name="password">
         </div>
         <div class="col-md-6">
             <label for="uName" class="form-label">이름</label>
-            <input type="text" class="form-control" id="uName" name="uName">
+            <input type="text" class="form-control" id="uName" name="username">
         </div>
         <div class="col-md-6">
-            <label for="uPhone" class="form-label">전화번호</label>
-            <input type="tel" class="form-control" id="uPhone" name="uPhone">
+            <label for="uNick" class="form-label">별명</label>
+            <input type="text" class="form-control" id="uNick" name="nickname">
+        </div>
+        <div class="col-md-6">
+            <label for="uPhone" class="form-label">전화 번호</label>
+            <input type="tel" class="form-control" id="uPhone" name="phone_Number">
         </div>
         <div class="col-12">
             <label for="uAdress" class="form-label">주소</label>
-            <input type="text" class="form-control" id="uAdress" name="uAdress">
+            <input type="text" class="form-control" id="uAdress" name="address">
         </div>
 
 
