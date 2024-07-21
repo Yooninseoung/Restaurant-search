@@ -21,7 +21,7 @@ public class JavaReadCsvService { //공공데이터 포털에서 제공하는 �
         Restaurant restaurant;
 
         try {
-            File file = new File("C:\\Restaurant-search\\src\\main\\resources\\csv\\restaurantData.csv");
+            File file = new File("C:\\Users\\User\\Desktop\\minsu\\Restaurant-search\\src\\main\\resources\\csv\\restaurantData.csv");
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             String line;
             while ((line = br.readLine())!=null) {
