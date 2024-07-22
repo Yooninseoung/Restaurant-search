@@ -46,7 +46,11 @@ public class Restaurant {
     @Column(name = "photo_path", length = 200)
     private String photoPath;
 
-    public Restaurant( String restaurantName, String phoneNumber, String address, String menu) {
+    public Restaurant() {
+
+    }
+
+    public Restaurant(String restaurantName, String phoneNumber, String address, String menu) {
 
         this.restaurantName = restaurantName;
         this.phoneNumber = phoneNumber;
