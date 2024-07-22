@@ -64,9 +64,14 @@
                 <p class="lead my-3">주소 : <span th:text="${restaurant.address}">단계동 터미널</span> </p>
                 <p class="lead my-3">전화번호 : <span th:text="${restaurant.phoneNumber}">033-123-4567</span> </p>
                 <p class="lead my-3">평점 : <span th:text="${restaurant.rating}">4.5</span> </p>
-                <button type="button" class="btn btn-primary">좋아요</button>
-                <button type="button" class="btn btn-danger">싫어요</button>
-                <button type="button" class="btn btn-warning">즐겨찾기</button>
+                <button type="button" class="btn btn-primary"
+                        th:onclick="|location.href='@{/restaurant/push/like(restaurantId=${restaurant.restaurantID})}'|">좋아요
+                    <span th:text="${restaurant.likes}"></span>
+                </button>
+                <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/restaurant/push/dislike(restaurantId=${restaurant.restaurantID})}'|">싫어요
+                    <span th:text="${restaurant.dislikes}"></span>
+                </button>
+                <button type="button" class="btn btn-warning" onclick="location.href='#">즐겨찾기</button>
             </div>
             <img class="bd-placeholder-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSne-KMXnhUqmq3YaL-CT50GQvOXEsdYksjtw&s" alt="맛집" width="100%" height="225">
         </div>
