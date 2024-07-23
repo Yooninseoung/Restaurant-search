@@ -12,21 +12,24 @@ import java.math.BigDecimal;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reviewID")
     private Integer reviewID;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurantID", nullable = false)
-    private Restaurant restaurant;
+//    @ManyToOne
+//    @JoinColumn(name = "restaurantID", nullable = false)
+//    private Restaurant restaurant;
+
+    @JoinColumn(name = "restaurantId", nullable = false)
+    private Integer restaurantId;
 
     @Column(name = "userID", nullable = false)
-    private Integer userID;
+    private String userID;
 
     @Column(name = "OneLineReview", columnDefinition = "TEXT")
     private String OneLineReview;
 
-    @Column(name = "평점", precision = 3, scale = 1)
+    @Column(name = "rating", precision = 3, scale = 1)
     private BigDecimal rating;
 
     @Column(name = "photo_path", length = 255)

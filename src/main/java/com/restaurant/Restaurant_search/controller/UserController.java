@@ -17,7 +17,7 @@ public class UserController {
 
 
 
-    @PostMapping("/signUp")
+    @PostMapping("/signUp") //회원 가입
     public String insert(User user) {
         userService.insert(user);
         return "index";

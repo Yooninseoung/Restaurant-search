@@ -35,7 +35,7 @@
 <header data-bs-theme="dark">
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
+            <a href="/index" class="navbar-brand d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                 <strong>GangwonCook</strong>
             </a>
@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<div style="float:right; margin-right:125px;"><button type="button" class="btn btn-outline-secondary" >리뷰 쓰기</button></div>
+<div style="float:right; margin-right:125px;"><button type="button" class="btn btn-outline-secondary" th:onclick="|location.href='@{/review/writeForm(restaurantId=${restaurant.restaurantID})}'|" >리뷰 쓰기</button></div>
 
 <table class="table" style=" width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
     <thead>
@@ -90,12 +90,11 @@
     </thead>
     <tbody>
     <!-- 세분화 필요-->
-    <div th:each="item:${post}" >
+    <div th:each="item:${review}" >
     <tr>
-        <td th:text="${item}">맛있음</td>
-        <td>5.0</td>
-        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSne-KMXnhUqmq3YaL-CT50GQvOXEsdYksjtw&s" width="100" height="100" />
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSne-KMXnhUqmq3YaL-CT50GQvOXEsdYksjtw&s" width="100" height="100" /></td>
+        <td th:text="${item.OneLineReview}">맛있음</td>
+        <td th:text="${item.rating}">5.0</td>
+        <td><img th:src="@{${item.photo_path}}" width="100" height="100" /></td>
 
     </tr>
     </div>
