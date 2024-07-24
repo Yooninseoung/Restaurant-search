@@ -4,6 +4,7 @@ import com.restaurant.Restaurant_search.entity.Review;
 import com.restaurant.Restaurant_search.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -16,14 +17,20 @@ public class ReviewService {
     @Autowired
     ReviewRepository reviewRepository;
 
-    public void writeReview(Review review, MultipartFile file) throws IOException{
+    @Autowired
+    RestaurantService restaurantService;
 
-        //Integer restaurantId = review.getRestaurant().getRestaurantID();
+    public void writeReview(Review review, MultipartFile file, String userId)  throws IOException{
+
+
         Integer restaurantId = review.getRestaurantId();
-        String photo_path = uploadFile(file, restaurantId); //파일 업로드
+        String photo_path = uploadFile(file, restaurantId); //파일 업로드 경로
 
         review.setPhoto_path(photo_path);
-        review.setUserID("admin");
+        review.setUserID("admin"); //작성자 입력, session에서 userId 받아 와야 한다.
+        //review.setUserID(userId); // login 기능 완료 시 작성자 이름으로 대체
+
+        restaurantService.avgRestaurantRating(review.getRating(), restaurantId); //식당 평점 계산
 
         System.out.println(review);
 
