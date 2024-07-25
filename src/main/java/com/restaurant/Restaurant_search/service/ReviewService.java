@@ -28,6 +28,8 @@ public class ReviewService {
 
         review.setPhoto_path(photo_path);
         review.setUserID("admin"); //작성자 입력, session에서 userId 받아 와야 한다.
+
+
         //review.setUserID(userId); // login 기능 완료 시 작성자 이름으로 대체
 
         restaurantService.avgRestaurantRating(review.getRating(), restaurantId); //식당 평점 계산

@@ -41,7 +41,7 @@ public class RestaurantController {
         Restaurant restaurant = null;
         String restaurantId = req.getParameter("restaurantId"); //식당 id를 받아와 조회함
 
-        if(btn == "like"){ //좋아요 버튼이 눌림
+        if(btn.equals("like")){ //좋아요 버튼이 눌림
             restaurant = restaurantService.like(Long.parseLong(restaurantId));
         }else{ // 싫어요 버튼이 눌림
             restaurant = restaurantService.dislike(Long.parseLong(restaurantId));
