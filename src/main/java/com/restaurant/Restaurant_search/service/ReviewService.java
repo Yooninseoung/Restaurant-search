@@ -2,7 +2,13 @@ package com.restaurant.Restaurant_search.service;
 
 import com.restaurant.Restaurant_search.entity.Review;
 import com.restaurant.Restaurant_search.repository.ReviewRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +18,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class ReviewService {
     @Autowired
@@ -56,5 +63,16 @@ public class ReviewService {
 
     public List<Review> getReviewsByRestaurantId(int restaurantId) {
         return reviewRepository.findByRestaurantId(restaurantId);
+    }
+
+
+    public Page<Review> paging(Pageable pageable, int restaurantId) { //페이지를 쉽게 나눠줌
+        int page = pageable.getPageNumber() - 1; // page 위치에 있는 값은 0부터 시작한다.
+        int pageLimit = 5; // 한페이지에 보여줄 글 개수
+
+        // 한 페이지당 5개씩 글을 보여주고 정렬 기준은 restaurantId기준으로 내림차순
+        Page<Review> postsPages = reviewRepository.findAllByRestaurantId(restaurantId, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "reviewID")));
+
+        return postsPages;
     }
 }

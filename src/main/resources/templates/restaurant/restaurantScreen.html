@@ -73,7 +73,7 @@
                 </button>
                 <button type="button" class="btn btn-warning" th:onclick="|location.href='@{/mark(restaurantId=${restaurant.restaurantID})}'|">즐겨찾기</button>
             </div>
-            <img class="bd-placeholder-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSne-KMXnhUqmq3YaL-CT50GQvOXEsdYksjtw&s" alt="맛집" width="100%" height="225">
+            <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350">
         </div>
     </div>
 </div>
@@ -98,8 +98,28 @@
 
     </tr>
     </div>
-    </tbody>
+  </tbody>
 </table>
+
+
+<div class="d-flex justify-content-center mt-2 my-3">
+    <!-- 첫 페이지 버튼 -->
+    <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=1)}" class="btn btn-outline-secondary"> < </a>
+
+    <!-- 페이지 번호 버튼 그룹 -->
+    <div class="btn-group me-2 mx-2" role="group" aria-label="Page navigation">
+        <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+            <button type="button" class="btn btn-outline-secondary mx-1" th:if="${page == review.number + 1}" th:text="${page}" disabled></button>
+            <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${page})}">
+                <button type="button" class="btn btn-outline-secondary mx-1" th:unless="${page == review.number + 1}" th:text="${page}"></button>
+            </a>
+        </span>
+    </div>
+
+    <!-- 마지막 페이지 버튼 -->
+    <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}" class="btn btn-outline-secondary"> > </a>
+</div>
+
 
 
 <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
