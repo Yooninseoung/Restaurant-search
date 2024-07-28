@@ -16,4 +16,10 @@ public class BookmarkService {
         bookmarkRepository.save(new Bookmark(bookmark));
 
     }
+
+    public void deleteBookmark(Integer restaurantId, String userId){
+        CommonDataID bookmark = new CommonDataID(userId, restaurantId);
+        bookmarkRepository.delete(new Bookmark(bookmark));
+
+    }
 }

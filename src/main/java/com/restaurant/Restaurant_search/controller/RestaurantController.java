@@ -1,7 +1,6 @@
 package com.restaurant.Restaurant_search.controller;
 
-import com.restaurant.Restaurant_search.entity.Restaurant;
-import com.restaurant.Restaurant_search.entity.Review;
+import com.restaurant.Restaurant_search.entity.*;
 import com.restaurant.Restaurant_search.service.LikeService;
 import com.restaurant.Restaurant_search.service.RestaurantService;
 import com.restaurant.Restaurant_search.service.ReviewService;
@@ -63,15 +62,40 @@ public class RestaurantController {
         Restaurant restaurant = null;
         Integer restaurantId = Integer.parseInt(req.getParameter("restaurantId")); //식당 id를 받아와 조회함
 
+
+
         //HttpSession session = req.getSession();
         //String userId = String.valueOf(session.getAttribute("userId"));
         String userId = "admin"; // 세션 기능 미완성, 대체제
 
-        if(btn.equals("like")){ //좋아요 버튼이 눌림
-            likeService.addLike(restaurantId, userId);
-        }else{ // 싫어요 버튼이 눌림
-            likeService.addUnLike(restaurantId, userId);
+
+
+        CommonDataID commonDataID = new CommonDataID(userId, restaurantId); //좋아요, 싫어요 table의 기본키
+
+        boolean flag;
+
+// 좋아요 혹은 싫어요 유무에 따라 ON/OFF 기능을 지원
+        if(btn.equals("like")){ //입력이 좋아요 버튼
+            flag = likeService.existLikeData(restaurantId, userId); //좋아요 테이블에 데이터가 존재하는지 확인
+            LikeData likeData = new LikeData(commonDataID); // entity객체
+            if(flag){ //true : 데이터가 있음 -> 데이터를 삭제
+                likeService.deleteLike(likeData);
+            }else {
+                likeService.addLike(likeData);
+            }
+        }else{ //입력이 싫어요 버튼
+            flag = likeService.existUnlikeData(restaurantId, userId); //싫어요 테이블에 존재하는지 확인
+            UnLikeData unlikeData = new UnLikeData(commonDataID);
+            if(flag){ //true : 데이터가 있음 -> 데이터를 삭제
+                likeService.deleteUnLike(unlikeData);
+            }else {
+                likeService.addUnLike(unlikeData);
+            }
+
         }
+
+
+
 
         model.addAttribute("restaurant", restaurant);
         return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantId;

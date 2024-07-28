@@ -16,24 +16,41 @@ public class LikeService {
     @Autowired
     UnlikeRepository unlikeRepository;
 
-    public void addLike(Integer restaurantId, String userId){
-        CommonDataID like = new CommonDataID(userId, restaurantId);
-        likeRepository.save(new LikeData(like));
+    public boolean existLikeData(Integer restaurantId, String userId){ // 좋아요가 존재한다면 true
+        return likeRepository.existsByRestaurantIdAndUserId(restaurantId, userId);
+    }
+
+    public boolean existUnlikeData(Integer restaurantId, String userId){ // 싫어요가 존재한다면 true
+        return unlikeRepository.existsByRestaurantIdAndUserId(restaurantId, userId);
+    }
+
+
+    public void addLike(LikeData likeData){ //좋아요 추가
+        likeRepository.save(likeData);
 
     }
 
-    public int countLike(Integer restaurantId){
+    public void deleteLike(LikeData likeData){ // 좋아요 취소
+        likeRepository.delete(likeData);
+
+    }
+
+    public int countLike(Integer restaurantId){ // 좋아요 수
 
         return likeRepository.countByRestaurantId(restaurantId);
     }
 
-    public void addUnLike(Integer restaurantId, String userId){
-        CommonDataID like = new CommonDataID(userId, restaurantId);
-        unlikeRepository.save(new UnLikeData(like));
+    public void addUnLike(UnLikeData unlikeData){ //싫어요 추가
+        unlikeRepository.save(unlikeData);
 
     }
 
-    public int countUnLike(Integer restaurantId){
+    public void deleteUnLike(UnLikeData unlikeData){ // 싫어요 취소
+        unlikeRepository.delete(unlikeData);
+
+    }
+
+    public int countUnLike(Integer restaurantId){ // 싫어요 수
 
         return unlikeRepository.countByRestaurantId(restaurantId);
     }
