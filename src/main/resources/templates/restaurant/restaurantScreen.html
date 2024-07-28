@@ -66,10 +66,10 @@
                 <p class="lead my-3">평점 : <span th:text="${restaurant.rating}">4.5</span> </p>
                 <button type="button" class="btn btn-primary"
                         th:onclick="|location.href='@{/restaurant/push/like(restaurantId=${restaurant.restaurantID})}'|">좋아요
-                    <span th:text="${restaurant.likes}"></span>
+                    <span th:text="${likeCount}"></span>
                 </button>
                 <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/restaurant/push/dislike(restaurantId=${restaurant.restaurantID})}'|">싫어요
-                    <span th:text="${restaurant.dislikes}"></span>
+                    <span th:text="${unlikeCount}"></span>
                 </button>
                 <button type="button" class="btn btn-warning" th:onclick="|location.href='@{/mark(restaurantId=${restaurant.restaurantID})}'|">즐겨찾기</button>
             </div>
@@ -79,6 +79,8 @@
 </div>
 
 <div style="float:right; margin-right:125px;"><button type="button" class="btn btn-outline-secondary" th:onclick="|location.href='@{/review/writeForm(restaurantId=${restaurant.restaurantID})}'|" >리뷰 쓰기</button></div>
+
+<p style="margin-top: 20px; margin-left: 10%;">📢작성한 리뷰는 수정, 삭제가 불가능 합니다.</p>
 
 <table class="table" style=" width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
     <thead>

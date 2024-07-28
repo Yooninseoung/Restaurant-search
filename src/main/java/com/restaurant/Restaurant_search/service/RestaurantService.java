@@ -20,34 +20,6 @@ public class RestaurantService {
 
     }
 
-    public Restaurant like(Long id){
-        // 해당 식당의 like 정보를 가져와 +1해준 후 업데이트
-        Restaurant restaurant = findRestaurant(id);
-        if (restaurant.getLikes() == null){
-            restaurant.setLikes(0);
-        }
-
-        restaurant.setLikes(restaurant.getLikes()+1);
-
-        restaurantRepository.save(restaurant); // save : 평소에는 insert, id가 존재하면 update 실행됨
-        return restaurant;
-
-    }
-
-
-    public Restaurant dislike(Long id){
-        // 해당 식당의 like 정보를 가져와 +1해준 후 업데이트
-        Restaurant restaurant = findRestaurant(id);
-        if (restaurant.getDislikes() == null){
-            restaurant.setDislikes(0);
-        }
-
-        restaurant.setDislikes(restaurant.getDislikes()+1);
-
-        restaurantRepository.save(restaurant); // save : 평소에는 insert, id가 존재하면 update 실행됨
-        return restaurant;
-
-    }
 
     public void avgRestaurantRating(BigDecimal reviewRating, int id){ //리뷰로 받은 평점과 기본 평점의 평균을 구해 다시 저장
         Restaurant restaurant = findRestaurant(id);

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Table(name = "Bookmark")
-public class BookmarkID implements Serializable {
+public class CommonDataID implements Serializable {
 
     private String userID;
 
@@ -16,10 +16,10 @@ public class BookmarkID implements Serializable {
     private Integer restaurantID;
 
     // Constructors
-    public BookmarkID() {
+    public CommonDataID() {
     }
 
-    public BookmarkID(String userID, Integer restaurantID) {
+    public CommonDataID(String userID, Integer restaurantID) {
         this.userID = userID;
         this.restaurantID = restaurantID;
     }

@@ -6,14 +6,15 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Bookmark {
+public class LikeData {
     @EmbeddedId
     CommonDataID commonDataID;
 
-    public Bookmark() {
+    public LikeData() {
     }
 
-    public Bookmark(CommonDataID id) {
+    public LikeData(CommonDataID id) {
         this.commonDataID = id;
     }
+
 }
