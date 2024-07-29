@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Album example · Bootstrap v5.3</title>
+    <title>Gangwoncook</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
 
@@ -130,6 +130,35 @@
             box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
         }
 
+        .button-container {
+            display: flex;
+            justify-content: flex-end; /* 오른쪽 정렬 */
+            padding: 10px; /* 버튼과 경계 사이에 여백 추가 */
+        }
+
+        .btn {
+            margin: 0 5px; /* 버튼 사이에 여백 추가 */
+        }
+
+        #suggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            z-index: 1000; /* 검색창 위에 표시되도록 */
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%; /* 입력창과 같은 폭으로 */
+            top: 100%; /* 검색창 바로 아래에 위치 */
+            left: 0; /* 왼쪽 정렬 */
+        }
+        #suggestions li {
+            cursor: pointer;
+        }
+        #suggestions li:hover {
+            background-color: #f8f9fa; /* 마우스 오버 시 배경색 변경 */
+        }
+
     </style>
 
 
@@ -154,7 +183,7 @@
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80%20%EB%B6%80%EB%B6%84.html#"
+            <a href="/"
                class="navbar-brand d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round"
                      stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24">
@@ -163,37 +192,64 @@
                 </svg>
                 <strong>Gangwoncook</strong>
             </a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
+            <div class="col text-end">
+            <a href="/user/login" class="btn btn-secondary  ">로그인</a>
 
-
-            <a href="#" class="btn btn-secondary  ">로그인</a>
-
-            <a href="#" class="btn btn-primary mx-2">회원가입</a>
-
+            <a href="/user/signUp" class="btn btn-primary mx-2">회원가입</a>
+            </div>
         </div>
     </div>
 </header>
 
 <main>
     <div class="container2 mt-3">
-        <form class="d-flex search-form" role="search">
-            <input class="form-control me-2" type="search" placeholder="인성이네 사람들의 리뷰 후기들로 만드는 맛집 랭킹! "
+        <form class="d-flex search-form" role="search" action="/search" method="get">
+            <input class="form-control me-2" type="search" name="query" placeholder="Gangwoncook의 맛집 검색"
                    aria-label="Search">
             <button class="btn btn-outline-success" type="submit">🔍</button>
+
+            <ul id="suggestions" class="list-group mt-2"></ul>
+
+            <script>
+                document.getElementById('search-input').addEventListener('input', function() {
+                    let query = this.value;
+                    // 입력된 검색어가 2자 이상일 때만 자동완성 요청
+                    if (query.length >= 2) {
+                        fetch(`/search/autocomplete?query=${query}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                let suggestions = document.getElementById('suggestions');
+                                suggestions.innerHTML = ''; // 이전 제안 목록 초기화
+                                data.forEach(item => {
+                                    let li = document.createElement('li');
+                                    li.textContent = item;
+                                    li.classList.add('list-group-item');
+                                    // 항목 클릭 시 페이지 이동
+                                    li.addEventListener('click', function() {
+                                        window.location.href = `/restaurantScreen?query=${encodeURIComponent(item)}`;
+                                    });
+                                    suggestions.appendChild(li);
+                                });
+                            });
+                    } else {
+                        // 검색어가 2자 미만일 경우 제안 목록을 비움
+                        document.getElementById('suggestions').innerHTML = '';
+                    }
+                });
+
+            </script>
+
         </form>
         <section class="py-2 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-5 mx-auto">
 
-                    <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80%20%EB%B6%80%EB%B6%84.html#"
+                    <a href="/freeBoard"
                        class="btn btn-primary mx-4">자유 게시판</a>
-                    <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%EC%A7%80%EC%97%AD%EB%B3%84%20%EA%B2%80%EC%83%89%20%EB%B6%80%EB%B6%84.html"
+                    <a href="/regional-search"
                        class="btn btn-secondary mx-4">지역별 검색</a>
-                    <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%EC%A0%84%EC%B2%B4%20%EA%B2%80%EC%83%89%20%EB%B6%80%EB%B6%84.html"
-                       class="btn btn-secondary mx-4">맛집 랭킹 (1~100)</a>
+                    <a href="/ranking-search"
+                       class="btn btn-secondary mx-4">맛집 랭킹 (1~21)</a>
                     <p></p>
                 </div>
             </div>
@@ -206,9 +262,70 @@
             <p>
                 당신을 위한 HOT 매장 추천
             </p>
+
+            <script>
+                function updateCounts(restaurantId, likeCount, dislikeCount, bookmarkCount) {
+                    document.getElementById(`like-count-${restaurantId}`).textContent = likeCount;
+                    document.getElementById(`dislike-count-${restaurantId}`).textContent = dislikeCount;
+                    document.getElementById(`bookmark-count-${restaurantId}`).textContent = bookmarkCount;
+                }
+
+                function handleLike(restaurantId) {
+                    fetch(`/restaurant/${restaurantId}/like`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ userId: getUserId() })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // 업데이트된 데이터를 사용하여 UI를 수정
+                            updateCounts(restaurantId, data.likes, data.dislikes, data.bookmarks);
+                        });
+                }
+
+                function handleDislike(restaurantId) {
+                    fetch(`/restaurant/${restaurantId}/dislike`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ userId: getUserId() })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // 업데이트된 데이터를 사용하여 UI를 수정
+                            updateCounts(restaurantId, data.likes, data.dislikes, data.bookmarks);
+                        });
+                }
+
+                function handleBookmark(restaurantId) {
+                    fetch(`/restaurant/${restaurantId}/bookmark`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ userId: getUserId() })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // 업데이트된 데이터를 사용하여 UI를 수정
+                            updateCounts(restaurantId, data.likes, data.dislikes, data.bookmarks);
+                        });
+                }
+
+                function getUserId() {
+                    // 실제로는 서버에서 사용자 ID를 가져와야 합니다.
+                    return 1; // 예시로 하드코딩된 사용자 ID
+                }
+
+            </script>
+
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card shadow-sm">
+                        <a href="/restaurantScreen?id=[[${restaurant.id}]]"></a>
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                              xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                              preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
@@ -216,17 +333,20 @@
                             <text x="50%" y="50%" fill="#eceeef" dy=".3em">맛집 이미지</text>
                         </svg>
                         <div class="card-body">
-                            <p class="card-text">인기 메뉴
+                            <p class="card-text">${restaurant.name}인기 메뉴
                             </p>
-                            <p> 런치 오마카세, 디너 오마카세
-                            </p>
+                            <p>${restaurant.description}</p>
+
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">좋아요👍</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">싫어요👎</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleLike(${restaurant.id})">좋아요👍</button>
+                                    <span id="like-count-[[${restaurant.id}]]">[[${restaurant.likes}]]</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleDislike(${restaurant.id})">싫어요👎</button>
+                                    <span id="dislike-count-[[${restaurant.id}]]">[[${restaurant.dislikes}]]</span>
                                 </div>
-                                <small class="text-body-secondary">조회수</small>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">즐겨찾기⭐</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">평점</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleBookmark(${restaurant.id})">즐겨찾기⭐</button>
+                                <span id="bookmark-count-[[${restaurant.id}]]">[[${restaurant.bookmarks}]]</span>
                             </div>
                         </div>
                     </div>
@@ -392,7 +512,7 @@
                 </ul>
 
                 <p class="float-end mb-1">
-                    <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80%20%EB%B6%80%EB%B6%84.html#"
+                    <a href="#" onclick="scrollToTop()"
                        class="bord-text2">위로 돌아가기</a>
                 </p>
             </div>
