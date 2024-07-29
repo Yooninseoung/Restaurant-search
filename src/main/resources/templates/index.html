@@ -130,12 +130,24 @@
             box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
         }
 
-    </style>
+        #recommendationFrame {
+            display: none; /* Initially hidden */
+            position: fixed; /* Fixed position to stay on top */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Center the frame exactly */
+            padding: 20px;
+            background-color: white; /* Background color for visibility */
+            border: 1px solid #ccc; /* Optional border */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
+            z-index: 1000; /* Ensure it stays on top of other content */
+        }
 
+
+    </style>
 
 </head>
 <body>
-
 
 <header data-bs-theme="dark">
     <div class="text-bg-dark collapse" id="navbarHeader">
@@ -190,8 +202,8 @@
 
                     <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80%20%EB%B6%80%EB%B6%84.html#"
                        class="btn btn-primary mx-4">자유 게시판</a>
-                    <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%EC%A7%80%EC%97%AD%EB%B3%84%20%EA%B2%80%EC%83%89%20%EB%B6%80%EB%B6%84.html"
-                       class="btn btn-secondary mx-4">지역별 검색</a>
+                    <button id="recommendButton" class="btn btn-primary mx-4">메뉴 추천</button>
+                    <div id="recommendationFrame"></div>
                     <a href="file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%EC%A0%84%EC%B2%B4%20%EA%B2%80%EC%83%89%20%EB%B6%80%EB%B6%84.html"
                        class="btn btn-secondary mx-4">맛집 랭킹 (1~100)</a>
                     <p></p>
@@ -402,7 +414,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
+<script>
+    document.getElementById('recommendButton').addEventListener('click', function() {
+        fetch('/recommendMenu')
+            .then(response => response.text())
+            .then(data => {
+            const frame = document.getElementById('recommendationFrame');
+                        frame.style.display = 'block';
+                document.getElementById('recommendationFrame').innerHTML = data;
+                // Set a timeout to hide the recommendation after 5 seconds
+                setTimeout(() => {
+                    frame.style.display = 'none';
+                }, 1000);
+            });
+    });
+</script>
 
 </body>
 </html>
