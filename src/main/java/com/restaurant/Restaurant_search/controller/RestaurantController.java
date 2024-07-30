@@ -57,17 +57,13 @@ public class RestaurantController {
 
 
     @RequestMapping(value="/push/{where}/{btn}", method= RequestMethod.GET) //btn에 따른 좋아요, 싫어요 기능
-    public String pushButton(@PathVariable("where") String where, @PathVariable("btn") String btn, HttpServletRequest req, Model model){
+    public String pushButton(@PathVariable("where") String where,
+                             @PathVariable("btn") String btn,
+                             HttpServletRequest req, Model model,
+                             @SessionAttribute(name = "userId", required = false) String userId){
 
         Restaurant restaurant = null;
         Integer restaurantId = Integer.parseInt(req.getParameter("restaurantId")); //식당 id를 받아와 조회함
-
-
-
-        //HttpSession session = req.getSession();
-        //String userId = String.valueOf(session.getAttribute("userId"));
-        String userId = "admin"; // 세션 기능 미완성, 대체제
-
 
 
         CommonDataID commonDataID = new CommonDataID(userId, restaurantId); //좋아요, 싫어요 table의 기본키

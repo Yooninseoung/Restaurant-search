@@ -15,7 +15,7 @@ public class IndexController {
     @Autowired
     RestaurantService restaurantService;
 
-    @GetMapping("/index")
+    @GetMapping(value = {"/", "/index"})
     public String index(Model model){
         List<Restaurant> restaurants = restaurantService.restaurantList();
         model.addAttribute("restaurant", restaurants);

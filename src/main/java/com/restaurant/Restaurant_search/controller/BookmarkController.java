@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.awt.print.Book;
 
@@ -20,11 +21,9 @@ public class BookmarkController {
     BookmarkService bookmarkService;
 
     @RequestMapping(value="/mark/{where}", method= RequestMethod.GET) //즐겨찾기 추가 버튼
-    public String bookmark(HttpServletRequest req, @PathVariable("where") String where){
-
-        //HttpSession session = req.getSession();
-        //String userId = String.valueOf(session.getAttribute("userId"));
-        String userId = "admin"; // 세션 기능 미완성, 대체제
+    public String bookmark(HttpServletRequest req,
+                           @PathVariable("where") String where,
+                           @SessionAttribute(name = "userId", required = false) String userId){
 
         Integer restaurantID = Integer.parseInt(req.getParameter("restaurantId"));
 

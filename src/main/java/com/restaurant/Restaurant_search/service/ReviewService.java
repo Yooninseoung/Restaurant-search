@@ -34,14 +34,9 @@ public class ReviewService {
         String photo_path = uploadFile(file, restaurantId); //파일 업로드 경로
 
         review.setPhoto_path(photo_path);
-        review.setUserID("admin"); //작성자 입력, session에서 userId 받아 와야 한다.
-
-
-        //review.setUserID(userId); // login 기능 완료 시 작성자 이름으로 대체
+        review.setUserID(userId);
 
         restaurantService.avgRestaurantRating(review.getRating(), restaurantId); //식당 평점 계산
-
-        System.out.println(review);
 
         reviewRepository.save(review);
 

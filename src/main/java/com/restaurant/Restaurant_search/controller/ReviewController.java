@@ -27,7 +27,7 @@ public class ReviewController {
                             @ModelAttribute Review review,
                             @SessionAttribute(name = "userId", required = false) String userId) throws IOException {
 
-        reviewService.writeReview(review, file,userId); //파일을 제외한 정보 작성
+        reviewService.writeReview(review, file, userId); //파일을 제외한 정보 작성
 
 
         return "redirect:/restaurant/detailScreen?restaurantId=" + review.getRestaurantId();

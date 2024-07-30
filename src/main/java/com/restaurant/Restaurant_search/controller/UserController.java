@@ -3,11 +3,12 @@ package com.restaurant.Restaurant_search.controller;
 import com.restaurant.Restaurant_search.entity.User;
 import com.restaurant.Restaurant_search.repository.UserRepository;
 import com.restaurant.Restaurant_search.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/user")
 @Controller
@@ -20,6 +21,25 @@ public class UserController {
         return "login/login";
     }
 
+    @PostMapping("/login")
+    public String login(@RequestParam("userId") String userId,
+                        @RequestParam("password") String password,
+                        HttpServletRequest req,
+                        Model model) {
+        boolean success = userService.authenticate(userId, password);
+        if (success) {
+            HttpSession session = req.getSession();
+            session.setAttribute("userId", userId);
+            session.setMaxInactiveInterval(1800);// Session의 유효 시간 설정 (1800초 = 30분)
+            return "redirect:/index"; // 로그인 성공 시 index.html 페이지로 이동
+        }
+        else {
+
+            return "login/login"; // 로그인 실패 시 다시 login.html 페이지로 이동
+        }
+    }
+
+
     @GetMapping("/signUp")
     public String signupPage(){
         return "login/signup";
@@ -31,4 +51,14 @@ public class UserController {
         userService.insert(user);
         return "redirect:/index";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req){
+        HttpSession session = req.getSession(false);  // Session이 없으면 null return
+        if(session != null) {
+            session.invalidate();
+        }
+        return "redirect:/index";
+    }
+
 }

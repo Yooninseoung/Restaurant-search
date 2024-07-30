@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0183)file:///C:/Users/pc/Desktop/%EC%9D%B8%EC%84%B1%EC%9D%B4%EB%84%A4%20%EB%A7%9B%EC%A7%91%20%EB%9E%AD%ED%82%B9%20%EC%A7%80%EC%97%AD%EB%B3%84%20%EA%B2%80%EC%83%89%20%EB%B6%80%EB%B6%84.html -->
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="light" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -127,45 +127,32 @@
 <body>
 
 
+
 <header data-bs-theme="dark">
-    <div class="text-bg-dark collapse" id="navbarHeader" style="">
+    <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
+            <a href="/index" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <strong>GangwonCook</strong>
+            </a>
 
-                </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4></h4>
 
+
+            <div class="text-end">
+                <div th:if="${session.userId != null}">
+                    <span style="color:white;">환영합니다! <span th:text="${session.userId}"></span>님</span>
+                    <button type="button" class="btn btn-outline-light me-2"  onclick="location.href='/user/logout'">Logout</button>
                 </div>
+                <div th:unless="${session.userId != null}">
+                    <button type="button" class="btn btn-outline-light me-2"  onclick="location.href='/user/login'">Login</button>
+                    <button type="button" class="btn btn-warning"  onclick="location.href='/user/signUp'">Sign-up</button>
+                </div>
+
             </div>
         </div>
     </div>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a href="/index"
-               class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
-                     viewBox="0 0 24 24">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                </svg>
-                <strong>Gangwoncook</strong>
-            </a>
-
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-            <a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a><a></a>
-
-
-            <a href="#" class="btn btn-secondary  ">로그인</a>
-
-            <a href="#" class="btn btn-primary mx-2">회원가입</a>
-        </div>
-    </div>
 </header>
+
 
 <main>
     <div class="container2 mt-3">
