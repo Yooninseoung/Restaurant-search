@@ -21,6 +21,11 @@ public class RestaurantService {
         return list;
     }
 
+    public List<Restaurant> rankRestaurantList(){ //index화면에 보이는 20개의 식당 정보를 반환
+        List<Restaurant> list = restaurantRepository.findTop21ByRating();
+        return list;
+    }
+
     public Restaurant findRestaurant(long id){
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
         return restaurant.orElse(null); // 식당이 존재하지 않으면 null을 반환하거나 예외를 던질 수 있음
@@ -43,4 +48,19 @@ public class RestaurantService {
         }
         restaurantRepository.save(restaurant);
     }
+
+    public void addRestaurant(Restaurant restaurant){
+        restaurantRepository.save(restaurant);
+    }
+
+    public List<Restaurant> searchRestaurants(String searchName) {
+        List<Restaurant> restaurants = restaurantRepository.searchByRestaurantName(searchName);
+
+        if (restaurants.isEmpty()) {
+            return null;
+        }
+        return restaurants;
+    }
+
+
 }

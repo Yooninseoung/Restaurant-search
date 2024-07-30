@@ -95,8 +95,10 @@ public class RestaurantController {
         }else if(where.equals("detail")){
             model.addAttribute("restaurant", restaurant);
             return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantId;
+        }else if(where.equals("ranking")){
+            return "redirect:/ranking";
         }else{
-            return "Rankingsearch";
+            return "redirect:/search";
         }
 
 

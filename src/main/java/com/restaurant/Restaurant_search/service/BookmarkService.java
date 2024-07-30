@@ -25,4 +25,8 @@ public class BookmarkService {
     public boolean existBookmrk(Integer restaurantId, String userId){ // 북마크가 존재한다면 true
         return bookmarkRepository.existsByRestaurantIdAndUserId(restaurantId, userId);
     }
+
+    public int countBookmark(Integer restaurantId){
+        return bookmarkRepository.countByRestaurantId(restaurantId);
+    }
 }

@@ -3,7 +3,9 @@ package com.restaurant.Restaurant_search.controller;
 import com.restaurant.Restaurant_search.entity.Bookmark;
 import com.restaurant.Restaurant_search.entity.CommonDataID;
 import com.restaurant.Restaurant_search.entity.LikeData;
+import com.restaurant.Restaurant_search.entity.Restaurant;
 import com.restaurant.Restaurant_search.service.BookmarkService;
+import com.restaurant.Restaurant_search.service.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import java.awt.print.Book;
 public class BookmarkController {
     @Autowired
     BookmarkService bookmarkService;
+
+    @Autowired
+    RestaurantService restaurantService;
 
     @RequestMapping(value="/mark/{where}", method= RequestMethod.GET) //즐겨찾기 추가 버튼
     public String bookmark(HttpServletRequest req,
@@ -39,13 +44,21 @@ public class BookmarkController {
             bookmarkService.addBookmark(bookmark);
         }
 
+        int bookmarkCount = bookmarkService.countBookmark(restaurantID); //특정 식당의 북마크 수를 갖고옴.
+        // 변경된 북마크 수를 식당에 저장함(정렬을 위해서)
+        Restaurant restaurant = restaurantService.findRestaurant(restaurantID);
+        restaurant.setBookmarks(bookmarkCount);
+        restaurantService.addRestaurant(restaurant);
 
-        if(where.equals("index")){ //좋아요 싫어요 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
+
+        if(where.equals("index")){ //즐겨찾기 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
             return "redirect:/index";
         }else if(where.equals("detail")){
             return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantID;
-        }else{
-            return "Rankingsearch";
+        }else if(where.equals("ranking")){
+            return "redirect:/ranking";
+        }else {
+            return "redirect:/index";
         }
 
     }

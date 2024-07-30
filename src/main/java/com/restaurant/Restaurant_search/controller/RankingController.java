@@ -1,12 +1,22 @@
 package com.restaurant.Restaurant_search.controller;
 
+import com.restaurant.Restaurant_search.entity.Restaurant;
+import com.restaurant.Restaurant_search.service.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class RankingController {
-    @GetMapping("/ranking")
-    public String showRankingSearchPage() {
-        return "search/Rankingsearch"; // "search/Rankingsearch.html"을 반환
+    @Autowired
+    RestaurantService restaurantService;
+    @GetMapping("/ranking") //랭킹 페이지
+    public String rank(Model model){
+        List<Restaurant> restaurants = restaurantService.rankRestaurantList();
+        model.addAttribute("restaurant", restaurants);
+        return "search/Rankingsearch";
     }
 }

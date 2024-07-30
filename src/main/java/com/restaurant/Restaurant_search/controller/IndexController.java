@@ -2,10 +2,12 @@ package com.restaurant.Restaurant_search.controller;
 
 import com.restaurant.Restaurant_search.entity.Restaurant;
 import com.restaurant.Restaurant_search.service.RestaurantService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -21,6 +23,8 @@ public class IndexController {
         model.addAttribute("restaurant", restaurants);
         return "index";
     }
+
+
 
     @GetMapping("/recommendMenu")
     public String recommendMenu(Model model){
@@ -39,5 +43,14 @@ public class IndexController {
 
 
         return "restaurant/recommendFood";
+    }
+
+    @PostMapping("/search")
+    public String searRestaurant(HttpServletRequest req, Model model){
+        String searchName = req.getParameter("searchName");
+        List<Restaurant> restaurants = restaurantService.searchRestaurants(searchName);
+        model.addAttribute("restaurant", restaurants);
+        model.addAttribute("searchName", searchName);
+        return "search/searchPage";
     }
 }
