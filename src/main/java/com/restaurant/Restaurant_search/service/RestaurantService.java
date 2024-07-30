@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,6 +15,11 @@ public class RestaurantService {
 
     @Autowired
     RestaurantRepository restaurantRepository;
+
+    public List<Restaurant> restaurantList(){ //index화면에 보이는 9개의 식당 정보를 반환
+        List<Restaurant> list = restaurantRepository.findTop9ByRating();
+        return list;
+    }
 
     public Restaurant findRestaurant(long id){
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);

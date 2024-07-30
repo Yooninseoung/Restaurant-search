@@ -65,13 +65,13 @@
                 <p class="lead my-3">전화번호 : <span th:text="${restaurant.phoneNumber}">033-123-4567</span> </p>
                 <p class="lead my-3">평점 : <span th:text="${restaurant.rating}">4.5</span> </p>
                 <button type="button" class="btn btn-primary"
-                        th:onclick="|location.href='@{/restaurant/push/like(restaurantId=${restaurant.restaurantID})}'|">좋아요
+                        th:onclick="|location.href='@{/restaurant/push/detail/like(restaurantId=${restaurant.restaurantID})}'|">좋아요
                     <span th:text="${likeCount}"></span>
                 </button>
-                <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/restaurant/push/dislike(restaurantId=${restaurant.restaurantID})}'|">싫어요
+                <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/restaurant/push/detail/dislike(restaurantId=${restaurant.restaurantID})}'|">싫어요
                     <span th:text="${unlikeCount}"></span>
                 </button>
-                <button type="button" class="btn btn-warning" th:onclick="|location.href='@{/mark(restaurantId=${restaurant.restaurantID})}'|">즐겨찾기</button>
+                <button type="button" class="btn btn-warning" th:onclick="|location.href='@{/mark/detail(restaurantId=${restaurant.restaurantID})}'|">즐겨찾기</button>
             </div>
             <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350">
         </div>

@@ -1,12 +1,12 @@
 package com.restaurant.Restaurant_search.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class BasicController {
-
-
+public class BoardController {
+    @GetMapping("/board")
+    public String showFreeBoardPage() {
+        return "board/freeBoard"; // "freeBoard.html"을 반환
+    }
 }

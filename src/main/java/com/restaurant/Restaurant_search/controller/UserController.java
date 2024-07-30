@@ -15,11 +15,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login/login";
+    }
 
+    @GetMapping("/signUp")
+    public String signupPage(){
+        return "login/signup";
+    }
 
     @PostMapping("/signUp") //회원 가입
     public String insert(User user) {
+        System.out.print(user.getPhoneNumber());
         userService.insert(user);
-        return "index";
+        return "redirect:/index";
     }
 }

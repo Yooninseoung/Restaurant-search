@@ -23,18 +23,18 @@ public class User {
     @Column(name = "nickname", length = 50)
     private String nickname;
 
-    @Column(name = "phone_number", length = 20)
-    private String phone_number;
+    @Column(name = "phoneNumber", length = 20)
+    private String phoneNumber;
 
     @Column(name = "address", columnDefinition = "TEXT")
     private String address;
 
-    public User(String userID, String username, String password, String nickname, String phone_number, String address) {
+    public User(String userID, String username, String password, String nickname, String phoneNumber, String address) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
         this.address = address;
     }
 
@@ -74,11 +74,11 @@ public class User {
 
 
     public String getPhoneNumber() {
-        return phone_number;
+        return phoneNumber;
     }
 
-    public void setPhoneNumber(String phone_Number) {
-        this.phone_number = phone_Number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {

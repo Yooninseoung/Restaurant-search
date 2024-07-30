@@ -56,8 +56,8 @@ public class RestaurantController {
     }
 
 
-    @RequestMapping(value="/push/{btn}", method= RequestMethod.GET) //btn에 따른 좋아요, 싫어요 기능
-    public String pushButton(@PathVariable("btn") String btn, HttpServletRequest req, Model model){
+    @RequestMapping(value="/push/{where}/{btn}", method= RequestMethod.GET) //btn에 따른 좋아요, 싫어요 기능
+    public String pushButton(@PathVariable("where") String where, @PathVariable("btn") String btn, HttpServletRequest req, Model model){
 
         Restaurant restaurant = null;
         Integer restaurantId = Integer.parseInt(req.getParameter("restaurantId")); //식당 id를 받아와 조회함
@@ -94,12 +94,18 @@ public class RestaurantController {
 
         }
 
+        if(where.equals("index")){ //좋아요 싫어요 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
+            return "redirect:/index";
+        }else if(where.equals("detail")){
+            model.addAttribute("restaurant", restaurant);
+            return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantId;
+        }else{
+            return "Rankingsearch";
+        }
 
 
-
-        model.addAttribute("restaurant", restaurant);
-        return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantId;
 
     }
+
 
 }
