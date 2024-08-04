@@ -18,7 +18,7 @@ public class IndexController {
     RestaurantService restaurantService;
 
     @GetMapping(value = {"/", "/index"})
-    public String index(Model model){
+    public String index(Model model){ // 평점을 기준으로 9개의 식당 정보를 갖고옴.
         List<Restaurant> restaurants = restaurantService.restaurantList();
         model.addAttribute("restaurant", restaurants);
         return "index";

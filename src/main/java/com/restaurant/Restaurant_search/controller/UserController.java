@@ -31,6 +31,9 @@ public class UserController {
             HttpSession session = req.getSession();
             session.setAttribute("userId", userId);
             session.setMaxInactiveInterval(1800);// Session의 유효 시간 설정 (1800초 = 30분)
+            if(userId.equals("admin")){
+                return "redirect:/manage/adminPage";
+            }
             return "redirect:/index"; // 로그인 성공 시 index.html 페이지로 이동
         }
         else {

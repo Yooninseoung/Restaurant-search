@@ -18,4 +18,9 @@ public class AdministratorController {
         javaReadCsvService.readCSV();
         return "index";
     }
+
+    @RequestMapping("/adminPage")
+    public String adminPage(){
+        return "admin/adminPage";
+    }
 }
