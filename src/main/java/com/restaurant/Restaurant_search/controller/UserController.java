@@ -28,8 +28,12 @@ public class UserController {
                         Model model) {
         boolean success = userService.authenticate(userId, password);
         if (success) {
+            // 사용자 정보를 데이터베이스에서 조회
+            User user = userService.getUserById(userId);
+
             HttpSession session = req.getSession();
             session.setAttribute("userId", userId);
+            session.setAttribute("username", user.getUsername()); // username을 세션에 저장
             session.setMaxInactiveInterval(1800);// Session의 유효 시간 설정 (1800초 = 30분)
             if(userId.equals("admin")){
                 return "redirect:/manage/adminPage";
