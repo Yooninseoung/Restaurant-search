@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>식당 정보 등록</title>
+</head>
+<body>
+<form class="row g-3" method="post" action="/manage/restaurantAdd" enctype="multipart/form-data">
+    <h1>식당 등록</h1>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="name">식당 이름</span>
+        <input type="text" class="form-control" aria-label="name" aria-describedby="name" name="restaurantName">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="phone">연락처</span>
+        <input type="text" class="form-control" aria-label="phone" aria-describedby="phone" name="phoneNumber">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="address">주소</span>
+        <input type="text" class="form-control" aria-label="address" aria-describedby="address" name="address">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="menu">메뉴</span>
+        <input type="text" class="form-control" aria-label="menu" aria-describedby="menu" name="menu">
+    </div>
+
+
+    <div class="input-group mb-3">
+        <input type="file" name="file">
+    </div>
+
+    <div class="col-12" align="center">
+        <button type="submit" class="btn btn-outline-dark">등록</button>
+    </div>
+</form>
+</body>
+</html>

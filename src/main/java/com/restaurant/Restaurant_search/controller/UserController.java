@@ -50,7 +50,6 @@ public class UserController {
 
     @PostMapping("/signUp") //회원 가입
     public String insert(User user) {
-        System.out.print(user.getPhoneNumber());
         userService.insert(user);
         return "redirect:/index";
     }
@@ -63,5 +62,30 @@ public class UserController {
         }
         return "redirect:/index";
     }
+
+    @GetMapping("/searchUser") //userId로 user를 받아옴(관리자 .. 유져 검색 기능)
+    public String searchUser(HttpServletRequest req, Model model){
+        String searchId = req.getParameter("searchId");
+        User user = userService.searchUser(searchId);
+        model.addAttribute("user", user);
+        System.out.print(searchId);
+
+        return "admin/userManagePage";
+    }
+
+    @GetMapping("/deleteUser")
+    public String deleteUser(HttpServletRequest req){
+        String userId = req.getParameter("userId");
+        userService.deleteUserById(userId);
+
+        return "admin/adminPage";
+    }
+
+    @PostMapping("/updateUser") //회원 정보 수정
+    public String updateUser(User user) {
+        userService.insert(user);
+        return "admin/adminPage";
+    }
+
 
 }

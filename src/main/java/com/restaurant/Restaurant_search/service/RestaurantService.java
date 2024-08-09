@@ -1,10 +1,14 @@
 package com.restaurant.Restaurant_search.service;
 
 import com.restaurant.Restaurant_search.entity.Restaurant;
+import com.restaurant.Restaurant_search.entity.Review;
 import com.restaurant.Restaurant_search.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +25,7 @@ public class RestaurantService {
         return list;
     }
 
-    public List<Restaurant> rankRestaurantList(){ //index화면에 보이는 20개의 식당 정보를 반환
+    public List<Restaurant> rankRestaurantList(){ //index화면에 보이는 21개의 식당 정보를 반환
         List<Restaurant> list = restaurantRepository.findTop21ByRating();
         return list;
     }
@@ -53,13 +57,47 @@ public class RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
-    public List<Restaurant> searchRestaurants(String searchName) {
+    public List<Restaurant> searchRestaurants(String searchName) { //식당 검색 기능
         List<Restaurant> restaurants = restaurantRepository.searchByRestaurantName(searchName);
 
         if (restaurants.isEmpty()) {
             return null;
         }
         return restaurants;
+    }
+
+    public void writeRestaurant(Restaurant restaurant, MultipartFile file)  throws IOException{
+        if(!file.isEmpty()){
+            String photo_path = uploadFile(file); //파일 업로드 경로
+            restaurant.setPhotoPath(photo_path);
+        }
+
+        this.addRestaurant(restaurant);
+
+    }
+
+    public String uploadFile(MultipartFile file) throws IOException {
+        String restaurantPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\restaurantImg"; //파일 경로
+        String fileName = file.getOriginalFilename();
+        File saveFile = new File(restaurantPath, fileName);
+
+        file.transferTo(saveFile); //파일 경로에 저장
+
+        return "\\img\\restaurantImg\\"+fileName;
+
+    }
+
+    public void modifyRestaurant(Restaurant restaurant, MultipartFile file) throws IOException{ //식당 수정
+        if(!file.isEmpty()){
+            String photo_path = uploadFile(file); //파일 업로드 경로
+            restaurant.setPhotoPath(photo_path);
+        }
+
+        restaurantRepository.save(restaurant);
+    }
+
+    public void removeRestaurant(Long restaurantId){
+        restaurantRepository.deleteById(restaurantId);
     }
 
 

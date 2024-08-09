@@ -70,7 +70,12 @@
                 <div th:each="item:${restaurant}" >
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/img/restaurantDefaultImage.jpg" alt="맛집 이미지" th:onclick="|location.href='@{/restaurant/detailScreen(restaurantId=${item.restaurantID})}'|">
+
+                            <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 th:src="${item.photoPath != null ? item.photoPath : '/img/restaurantDefaultImage.jpg'}"
+                                 alt="맛집 이미지"
+                                 th:onclick="|location.href='@{/restaurant/detailScreen(restaurantId=${item.restaurantID})}'|">
+
 
                             <div class="card-body">
                                 <p class="card-text" th:text="${item.restaurantName}">식당 이름</p>
