@@ -4,6 +4,10 @@ import com.restaurant.Restaurant_search.entity.Restaurant;
 import com.restaurant.Restaurant_search.entity.Review;
 import com.restaurant.Restaurant_search.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -101,4 +105,14 @@ public class RestaurantService {
     }
 
 
+    public Page<Restaurant> paging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1; // page 위치에 있는 값은 0부터 시작한다.
+        int pageLimit = 21; // 한페이지에 보여줄 글 개수
+
+        // 한 페이지당 3개식 글을 보여주고 정렬 기준은 ID기준으로 내림차순
+        Page<Restaurant> postsPages = restaurantRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "restaurantID")));
+
+        return postsPages;
+
+    }
 }

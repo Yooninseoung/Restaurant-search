@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.awt.print.Book;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @Controller
 public class BookmarkController {
@@ -28,7 +30,7 @@ public class BookmarkController {
     @RequestMapping(value="/mark/{where}", method= RequestMethod.GET) //즐겨찾기 추가 버튼
     public String bookmark(HttpServletRequest req,
                            @PathVariable("where") String where,
-                           @SessionAttribute(name = "userId", required = false) String userId){
+                           @SessionAttribute(name = "userId", required = false) String userId) throws UnsupportedEncodingException {
 
         Integer restaurantID = Integer.parseInt(req.getParameter("restaurantId"));
 
@@ -57,8 +59,10 @@ public class BookmarkController {
             return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantID;
         }else if(where.equals("ranking")){
             return "redirect:/ranking";
-        }else {
+        }else if(where.equals("search")){
             return "redirect:/index";
+        }else{
+            return "redirect:/restaurant/restaurantAllPage";
         }
 
     }
