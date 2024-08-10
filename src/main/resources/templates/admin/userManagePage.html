@@ -36,7 +36,7 @@
 
     <div class="col-12" align="center">
         <button type="submit" >수정</button>
-        <button th:onclick="|location.href='@{/user/deleteUser(userId=${user.userID})}'|">삭제</button>
+        <button type="button" th:onclick="|location.href='@{/user/deleteUser(userId=${user.userID})}'|">삭제</button>
     </div>
 </form>
 

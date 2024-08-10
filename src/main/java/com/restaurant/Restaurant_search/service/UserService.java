@@ -29,12 +29,20 @@ public class UserService {
         return false;
     }
 
-    public User searchUser(String searchId) { // 회원 아이디로 정보 찾기
-        User user = userRepository.searchByUserId(searchId);
+    public List<User> searchUser(String searchId) { // 회원 아이디로 정보 찾기
+        List<User> user = userRepository.searchByUserId(searchId);
         return user;
     }
 
     public void deleteUserById(String userId){ //회원 삭제
         userRepository.deleteById(userId);
+        System.out.print(userId);
+    }
+
+    public User findByUserId(String userId){
+
+        Optional<User> user = userRepository.findById(userId);
+        return user.orElse(null); // 유져 존재하지 않으면 null을 반환하거나 예외를 던질 수 있음
+
     }
 }

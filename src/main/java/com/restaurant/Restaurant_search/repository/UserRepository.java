@@ -12,5 +12,5 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT r FROM User r WHERE r.userID LIKE %:searchId%")
-    User searchByUserId(@Param("searchId") String searchId);
+    List<User> searchByUserId(@Param("searchId") String searchId);
 }

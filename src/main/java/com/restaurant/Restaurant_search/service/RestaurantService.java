@@ -68,7 +68,7 @@ public class RestaurantService {
 
     public void writeRestaurant(Restaurant restaurant, MultipartFile file)  throws IOException{
         if(!file.isEmpty()){
-            String photo_path = uploadFile(file); //파일 업로드 경로
+            String photo_path = uploadFile(file, restaurant.getRestaurantID()); //파일 업로드 경로
             restaurant.setPhotoPath(photo_path);
         }
 
@@ -76,9 +76,9 @@ public class RestaurantService {
 
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
+    public String uploadFile(MultipartFile file, Integer restaurantId) throws IOException {
         String restaurantPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\restaurantImg"; //파일 경로
-        String fileName = file.getOriginalFilename();
+        String fileName = "restaurant_"+ restaurantId + "_" + file.getOriginalFilename();
         File saveFile = new File(restaurantPath, fileName);
 
         file.transferTo(saveFile); //파일 경로에 저장
@@ -89,7 +89,7 @@ public class RestaurantService {
 
     public void modifyRestaurant(Restaurant restaurant, MultipartFile file) throws IOException{ //식당 수정
         if(!file.isEmpty()){
-            String photo_path = uploadFile(file); //파일 업로드 경로
+            String photo_path = uploadFile(file, restaurant.getRestaurantID()); //파일 업로드 경로
             restaurant.setPhotoPath(photo_path);
         }
 

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RequestMapping("/user")
 @Controller
 public class UserController {
@@ -66,12 +69,22 @@ public class UserController {
     @GetMapping("/searchUser") //userId로 user를 받아옴(관리자 .. 유져 검색 기능)
     public String searchUser(HttpServletRequest req, Model model){
         String searchId = req.getParameter("searchId");
-        User user = userService.searchUser(searchId);
-        model.addAttribute("user", user);
-        System.out.print(searchId);
+        List<User> user = userService.searchUser(searchId);
+        model.addAttribute("users", user);
+        model.addAttribute("searchId", searchId);
 
+        return "admin/userSearchList";
+    }
+
+    @GetMapping("/selectUser") //관리자 유져 리스트에서 특정 유저를 선택
+    public String selectUser(HttpServletRequest req, Model model){
+        String userId = req.getParameter("userId");
+        User user = userService.findByUserId(userId);
+
+        model.addAttribute("user", user);
         return "admin/userManagePage";
     }
+
 
     @GetMapping("/deleteUser")
     public String deleteUser(HttpServletRequest req){
