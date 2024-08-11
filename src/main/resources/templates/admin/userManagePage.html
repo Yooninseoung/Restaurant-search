@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+</head>
+<body>
+
+<form class="row g-3" method="post" action="/user/updateUser">
+    <h1 align="center">회원 정보 수정</h1>
+    <div class="col-md-6">
+        <label for="uId" class="form-label">아이디</label>
+        <input type="text" class="form-control" id="uId" name="userID" th:value="${user.userID}">
+    </div>
+    <div class="col-md-6">
+        <label for="uPassword" class="form-label">비밀번호</label>
+        <input type="password" class="form-control" id="uPassword" name="password" th:value="${user.password}">
+    </div>
+    <div class="col-md-6">
+        <label for="uName" class="form-label">이름</label>
+        <input type="text" class="form-control" id="uName" name="username" th:value="${user.username}">
+    </div>
+    <div class="col-md-6">
+        <label for="uNick" class="form-label">별명</label>
+        <input type="text" class="form-control" id="uNick" name="nickname" th:value="${user.nickname}">
+    </div>
+    <div class="col-md-6">
+        <label for="uPhone" class="form-label">전화 번호</label>
+        <input type="tel" class="form-control" id="uPhone" name="phoneNumber" th:value="${user.phoneNumber}">
+    </div>
+    <div class="col-12">
+        <label for="uAdress" class="form-label">주소</label>
+        <input type="text" class="form-control" id="uAdress" name="address" th:value="${user.address}">
+    </div>
+
+
+    <div class="col-12" align="center">
+        <button type="submit" >수정</button>
+        <button type="button" th:onclick="|location.href='@{/user/deleteUser(userId=${user.userID})}'|">삭제</button>
+    </div>
+</form>
+
+
+
+
+</body>
+</html>

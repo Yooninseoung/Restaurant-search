@@ -12,7 +12,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/restaurant")
@@ -45,7 +47,7 @@ public class RestaurantController {
         model.addAttribute("unlikeCount", unlikeCount);
 
 
-        int blockLimit = 3;
+        int blockLimit = 3; ////페이지 버튼을 한번에 최대 5개를 보여줌
         int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = Math.min((startPage + blockLimit - 1), postsPages.getTotalPages());
         model.addAttribute("startPage", startPage); // 리뷰 리스트, 페이지 처음과 마지막 이동 시 사용하는 변수를 전달
@@ -97,12 +99,29 @@ public class RestaurantController {
             return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantId;
         }else if(where.equals("ranking")){
             return "redirect:/ranking";
+        }else if(where.equals("search")){
+            return "redirect:/index";
         }else{
-            return "redirect:/search";
+            return "redirect:/restaurant/restaurantAllPage";
         }
 
 
 
+    }
+
+    @GetMapping("/restaurantAllPage")
+    public String showAllRestaurantPage(Model model, @PageableDefault(page = 1) Pageable pageable){
+
+        Page<Restaurant> postsPages = restaurantService.paging(pageable);
+        model.addAttribute("restaurant", postsPages);
+
+        int blockLimit = 10; //페이지 버튼 한번에 10개씩 보여줌
+        int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), postsPages.getTotalPages());
+        model.addAttribute("startPage", startPage); // 식당 리스트, 페이지 처음과 마지막 이동 시 사용하는 변수를 전달
+        model.addAttribute("endPage", endPage);
+
+        return "restaurant/restaurantAllPage";
     }
 
 

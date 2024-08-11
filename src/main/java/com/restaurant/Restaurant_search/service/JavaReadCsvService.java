@@ -21,7 +21,8 @@ public class JavaReadCsvService { //공공데이터 포털에서 제공하는 �
         Restaurant restaurant;
 
         try {
-            File file = new File("C:\\Users\\User\\Desktop\\minsu\\Restaurant-search\\src\\main\\resources\\csv\\restaurantData.csv");
+            String csvPath = System.getProperty("user.dir") + "\\src\\main\\resources\\csv\\restaurantData.csv"; //파일 경로
+            File file = new File(csvPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             String line;
             while ((line = br.readLine())!=null) {
@@ -30,7 +31,6 @@ public class JavaReadCsvService { //공공데이터 포털에서 제공하는 �
                 aLine = Arrays.asList(lineArr);
                 restaurant = new Restaurant(lineArr[1],lineArr[6],lineArr[3],lineArr[7]);
                 csvRepository.save(restaurant);
-                //System.out.println(lineArr[0]);
             }
         } catch (Exception e) {
             System.out.println(e);

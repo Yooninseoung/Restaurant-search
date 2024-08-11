@@ -70,4 +70,8 @@ public class ReviewService {
 
         return postsPages;
     }
+
+    public void removeReview(Long reviewId){
+        reviewRepository.deleteById(reviewId);
+    }
 }
