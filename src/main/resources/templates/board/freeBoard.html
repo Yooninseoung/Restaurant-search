@@ -33,6 +33,19 @@
             text-decoration: none;
             color: inherit;
         }
+
+        .title-link {
+            display: block;
+            padding: 8px;
+            border: 2px solid #000; /* 검은색 테두리 추가 */
+            border-radius: 5px; /* 테두리 모서리 둥글기 (0으로 설정하면 네모난 테두리) */
+            text-decoration: none; /* 링크 밑줄 제거 */
+            color: inherit; /* 기본 텍스트 색상 유지 */
+        }
+
+        .title-link:hover {
+            background-color: #f5f5f5; /* 마우스 오버 시 배경색 변경 */
+        }
     </style>
 </head>
 <body>
@@ -77,6 +90,7 @@
     <table class="table" style=" width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
     <thead>
     <tr>
+        <th scope="col">좋아요</th>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
@@ -86,12 +100,24 @@
     </thead>
     <tbody>
     <!-- 게시글 목록 반복 -->
-    <tr th:each="item : ${boards}">
+    <tr th:each="item : ${boards}" class="clickable-row" >
+        <td>
+            <div style="display: flex; align-items: center;">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="likes(${item.boardId})">
+                    ⭐ <span th:text="${item.likes}">0</span>
+                </button>
+            </div>
+        </td>
+
         <td th:text="${item.boardId}"></td>
-        <td th:text="${item.title}"></td>
+        <td>
+        <a th:href="@{/board/detail/{boardId}(boardId=${item.boardId})}" th:text="${item.title}" class="text-link title-link" ></a>
+
+        </td>
         <td th:text="${item.username}"></td>
         <td th:text="${#temporals.format(item.writeDate, 'yyyy.MM.dd')}"></td>
         <td th:text="${item.content}"></td>
+
     </tr>
     </tbody>
 </table>

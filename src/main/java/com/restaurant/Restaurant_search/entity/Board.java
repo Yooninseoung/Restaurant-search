@@ -27,6 +27,9 @@ public class Board {
     @Column(name = "write_date", nullable = false, updatable = false)
     private LocalDateTime writeDate; // 작성일
 
+    @Column(name = "likes", nullable = true)
+    private Integer likes; // 좋아요 수, NULL 가능
+
     @PrePersist
     protected void onCreate() {
         this.writeDate = LocalDateTime.now();
@@ -84,4 +87,8 @@ public class Board {
     public void setWriteDate(LocalDateTime writeDate) {
         this.writeDate = writeDate;
     }
+
+    public Integer getLikes() { return likes; }
+
+    public void setLikes(Integer likes) { this.likes = likes; }
 }
