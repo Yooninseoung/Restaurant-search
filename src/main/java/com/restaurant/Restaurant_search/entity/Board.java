@@ -5,6 +5,7 @@ import lombok.Data;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Data
 @Table(name = "board")
