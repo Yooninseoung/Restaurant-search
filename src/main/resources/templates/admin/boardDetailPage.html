@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세화면</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+<header data-bs-theme="dark">
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a href="/index" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <strong>GangwonCook</strong>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>게시글 상세화면</h1>
+        <a href="/manage/board" class="btn btn-outline-secondary">목록으로 돌아가기</a>
+    </div>
+
+    <hr class="divider">
+
+
+    <table class="table table-section">
+        <tbody>
+        <tr>
+            <td><b>제목</b></td>
+            <td ><b>작성자</b></td>
+            <td ><b>작성일</b></td>
+
+        </tr>
+        <tr>
+            <td  th:text="${board.title}">제목</td>
+            <td  th:text="${board.username}">작성자</td>
+            <td  th:text="${#temporals.format(board.writeDate, 'yyyy.MM.dd')}">작성일</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+    <hr class="divider">
+    <br>
+    <div class="content-section">
+        <b>사용자 작성글</b>
+        <div class="content-value" th:text="${board.content}">내용</div>
+    </div>
+
+    <br><br><br>
+    ★해당 게시글 삭제하기(<b>복구 불가<b>) : <a th:href="@{/manage/delete/{boardId}(boardId=${board.boardId})}" class="btn btn-danger" >삭제</a>
+
+
+    <br><br><br><br>
+
+    <!-- 댓글 목록 추가 -->
+    <div class="comment-section">
+        <h5>댓글 목록</h5>
+        <div class="comment-list">
+            <!-- 댓글 목록을 서버에서 동적으로 생성 -->
+            <div th:each="comment : ${comments}" class="comment-item">
+                <strong th:text="${comment.username}">작성자</strong>: <span th:text="${comment.content}">댓글 내용</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 댓글 작성란 추가 -->
+    <div class="comment-section">
+        <h7>댓글 작성</h7>
+        <form action="/comment/save" method="post">
+            <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <textarea class="form-control comment-input" name="content" rows="4" placeholder="댓글 작성하기" required></textarea>
+            <button type="submit" class="btn btn-primary comment-button">댓글 작성</button>
+        </form>
+    </div>
+
+
+
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
