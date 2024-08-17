@@ -2,10 +2,7 @@ package com.restaurant.Restaurant_search.controller;
 
 import com.restaurant.Restaurant_search.entity.Restaurant;
 import com.restaurant.Restaurant_search.entity.Review;
-import com.restaurant.Restaurant_search.service.JavaReadCsvService;
-import com.restaurant.Restaurant_search.service.LikeService;
-import com.restaurant.Restaurant_search.service.RestaurantService;
-import com.restaurant.Restaurant_search.service.ReviewService;
+import com.restaurant.Restaurant_search.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +28,9 @@ public class AdministratorController {
 
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    BoardService boardService;
 
     @Autowired
     private JavaReadCsvService javaReadCsvService;
@@ -61,9 +61,10 @@ public class AdministratorController {
 
     @GetMapping("/board")
     public String manageBoard(){
-
+        boardService.getAllBoards();
         return "admin/boardManagePage";
     }
+
 
     @PostMapping("/restaurantAdd") //식당 등록
     public String addRestaurant(@RequestParam("file") MultipartFile file,
@@ -142,5 +143,7 @@ public class AdministratorController {
         reviewService.removeReview(Long.parseLong(reviewId));//특정 식당의 리뷰를 삭제
         return "admin/adminPage";
     }
+
+
 
 }
