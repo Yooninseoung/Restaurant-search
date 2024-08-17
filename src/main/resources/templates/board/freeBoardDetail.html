@@ -86,6 +86,74 @@
         .content-value {
             font-size: 1.2rem;
         }
+
+        .comment-section {
+            position: relative;
+            margin-top: 20px;
+            border-top: 1px solid #ccc; /* 댓글 구분선 */
+            padding-top: 15px;
+        }
+
+        .comment-input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .comment-button {
+            align-self: flex-start; /* 버튼을 왼쪽으로 정렬 */
+            margin-top: 10px;
+        }
+
+        .comment-list {
+            max-height: 400px; /* 댓글 목록의 최대 높이 설정 */
+            overflow-y: auto; /* 댓글 목록이 길어지면 스크롤 추가 */
+        }
+
+        .comment-item {
+            margin-bottom: 10px;
+        }
+
+        .mt-3.d-flex.justify-content-between {
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+
+        /* 수정 및 삭제 버튼 오른쪽 하단에 고정 위치 조정 */
+        .edit-delete-buttons {
+            display: flex;
+            justify-content: flex-end; /* 오른쪽 정렬 */
+            gap: 10px; /* 버튼 사이 간격 */
+        }
+
+        /* 댓글 작성 버튼 왼쪽 정렬 */
+        .comment-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-edit {
+            background-color: #ffc107; /* 노란색 배경 */
+            color: #fff; /* 흰색 텍스트 */
+            border: none; /* 기본 버튼 테두리 제거 */
+        }
+
+        .btn-delete {
+            background-color: #dc3545; /* 빨간색 배경 */
+            color: #fff; /* 흰색 텍스트 */
+            border: none; /* 기본 버튼 테두리 제거 */
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800; /* 버튼 호버 시 진한 노란색 */
+            color: #fff; /* 흰색 텍스트 */
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* 버튼 호버 시 진한 빨간색 */
+            color: #fff; /* 흰색 텍스트 */
+        }
     </style>
 </head>
 <body>
@@ -144,17 +212,42 @@
 
 
 
+    <!-- 댓글 목록 추가 -->
+    <div class="comment-section">
+        <h5>댓글 목록</h5>
+        <div class="comment-list">
+            <!-- 댓글 목록을 서버에서 동적으로 생성 -->
+            <div th:each="comment : ${comments}" class="comment-item">
+                <strong th:text="${comment.username}">작성자</strong>: <span th:text="${comment.content}">댓글 내용</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 댓글 작성란 추가 -->
+    <div class="comment-section">
+        <h7>댓글 작성</h7>
+        <form action="/comment/save" method="post">
+            <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <textarea class="form-control comment-input" name="content" rows="4" placeholder="댓글 작성하기" required></textarea>
+            <button type="submit" class="btn btn-primary comment-button">댓글 작성</button>
+        </form>
+    </div>
+
+    <!-- 수정 및 삭제 버튼 추가 -->
+
+    <div class="edit-delete-buttons mt-3" th:if="${session.username == board.username}">
+        <a th:href="@{/board/edit/{boardId}(boardId=${board.boardId})}" class="btn btn-edit">수정</a>
+        <form th:action="@{/board/delete/{boardId}(boardId=${board.boardId})}" method="post" class="d-inline ms-2">
+            <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <button type="submit" class="btn btn-delete">삭제</button>
+        </form>
     </div>
 
 
 </div>
 
-<footer class="py-5 text-center text-body-secondary bg-body-tertiary" style="width: 100%; position: absolute; bottom: 0; text-align: center;">
-    <p>테스트 중..</p>
-    <p class="mb-0">
-        <a href="#">Back to top</a>
-    </p>
-</footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
