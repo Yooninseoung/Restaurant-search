@@ -61,7 +61,7 @@ public class AdministratorController {
 
     @GetMapping("/board")
     public String manageBoard(){
-        boardService.getAllBoards();
+        //boardService.getAllBoards();
         return "admin/boardManagePage";
     }
 

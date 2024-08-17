@@ -1,9 +1,11 @@
 package com.restaurant.Restaurant_search.entity;
 
 import lombok.Data;
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Data
@@ -30,10 +32,19 @@ public class Board {
     @Column(name = "likes", nullable = true)
     private Integer likes; // 좋아요 수, NULL 가능
 
+    @Column(name = "photo_path", length = 255, nullable = true)
+    private String photoPath; // 사진 경로
+
+    // 댓글 목록 (게시글에 대한 댓글들)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments = new HashSet<>();
+
     @PrePersist
     protected void onCreate() {
         this.writeDate = LocalDateTime.now();
     }
+
+
 
     // 기본 생성자
     public Board() {
@@ -44,6 +55,7 @@ public class Board {
         this.title = title;
         this.content = content;
         this.username = username;
+        this.photoPath = photoPath;
         this.writeDate = LocalDateTime.now(); // 현재 시간으로 설정
     }
 
@@ -91,4 +103,12 @@ public class Board {
     public Integer getLikes() { return likes; }
 
     public void setLikes(Integer likes) { this.likes = likes; }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
 }

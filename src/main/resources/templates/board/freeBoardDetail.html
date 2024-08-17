@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 상세</title>
+    <title>게시글 상세화면</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <style>
@@ -14,6 +14,145 @@
         .title-label {
             font-size: 2.0rem; /* "제목: " 텍스트 크기 */
             font-weight: bold;
+        }
+
+        .board-title {
+            font-size: 1.2rem; /* <h2>의 기본 크기와 유사하게 설정 */
+        }
+
+        .title-label {
+            font-size: 1.2rem; /* "제목: " 텍스트 크기 */
+            font-weight: bold;
+        }
+
+        .section {
+            border: 1px solid #ccc; /* 연한 회색 테두리 */
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px; /* 테두리 둥글기 */
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #000; /* 제목 아래에 굵은 테두리 */
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .section-content {
+            font-size: 1rem;
+        }
+
+        /* 검은색 수평선 스타일 */
+        /* 구분선 스타일링 */
+        .divider {
+            border: none;
+            height: 2px; /* 줄의 두께를 조정할 수 있습니다 */
+            background-color: #333; /* 진한 검정색 */
+            margin: 20px; /* 상하 마진을 제거하여 줄이 붙도록 합니다 */
+
+        }
+
+        .author-label, .date-label {
+            font-size: 1.2rem; /* 레이블 텍스트 크기 */
+            font-weight: bold; /* 레이블 텍스트를 강조 */
+        }
+
+        .author-value, .date-value  {
+            font-size: 1.2rem; /* 값 텍스트 크기 */
+            font-weight: normal;
+        }
+
+        .info-section {
+            border-bottom: 1px solid #ccc; /* 회색 줄 추가 */
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .table-section {
+            width: 100%;
+            border-spacing: 10px;
+        }
+
+        .table-section td {
+            padding: 20px;
+            vertical-align: middle;
+        }
+
+        .author-label, .date-label, .title-label {
+            margin-right: 10px; /* 레이블과 값 사이의 간격 조정 */
+        }
+
+        .content-value {
+            font-size: 1.2rem;
+        }
+
+        .comment-section {
+            position: relative;
+            margin-top: 20px;
+            border-top: 1px solid #ccc; /* 댓글 구분선 */
+            padding-top: 15px;
+        }
+
+        .comment-input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .comment-button {
+            align-self: flex-start; /* 버튼을 왼쪽으로 정렬 */
+            margin-top: 10px;
+        }
+
+        .comment-list {
+            max-height: 400px; /* 댓글 목록의 최대 높이 설정 */
+            overflow-y: auto; /* 댓글 목록이 길어지면 스크롤 추가 */
+        }
+
+        .comment-item {
+            margin-bottom: 10px;
+        }
+
+        .mt-3.d-flex.justify-content-between {
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+
+        /* 수정 및 삭제 버튼 오른쪽 하단에 고정 위치 조정 */
+        .edit-delete-buttons {
+            display: flex;
+            justify-content: flex-end; /* 오른쪽 정렬 */
+            gap: 10px; /* 버튼 사이 간격 */
+        }
+
+        /* 댓글 작성 버튼 왼쪽 정렬 */
+        .comment-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-edit {
+            background-color: #ffc107; /* 노란색 배경 */
+            color: #fff; /* 흰색 텍스트 */
+            border: none; /* 기본 버튼 테두리 제거 */
+        }
+
+        .btn-delete {
+            background-color: #dc3545; /* 빨간색 배경 */
+            color: #fff; /* 흰색 텍스트 */
+            border: none; /* 기본 버튼 테두리 제거 */
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800; /* 버튼 호버 시 진한 노란색 */
+            color: #fff; /* 흰색 텍스트 */
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* 버튼 호버 시 진한 빨간색 */
+            color: #fff; /* 흰색 텍스트 */
         }
     </style>
 </head>
@@ -41,31 +180,74 @@
 </header>
 
 <div class="container">
-    <h1 style="margin-top: 50px;">게시글 상세</h1>
-
-    <div class="mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>게시글 상세화면</h1>
         <a href="/board" class="btn btn-outline-secondary">목록으로 돌아가기</a>
     </div>
 
-    <div>
-        <p>
-            <span class="title-label">제목: </span>
-            <span class="board-title" th:text="${board.title}">제목</span>
-        </p>
-        <p><strong>작성자: </strong> <span th:text="${board.username}">작성자</span></p>
-        <p><strong>작성일: </strong> <span th:text="${#temporals.format(board.writeDate, 'yyyy.MM.dd')}">작성일</span></p>
-        <p><strong>내용: </strong> <span th:text="${board.content}">내용</span></p>
+    <hr class="divider">
+
+
+    <table class="table table-section">
+        <tbody>
+        <tr>
+            <td class="author-label">작성자</td>
+            <td class="author-value" th:text="${board.username}">작성자</td>
+            <td class="date-label text-end">작성일</td>
+            <td class="date-value text-end" th:text="${#temporals.format(board.writeDate, 'yyyy.MM.dd')}">작성일</td>
+        </tr>
+        <tr>
+            <td class="title-label">제목</td>
+            <td class="board-title" colspan="3" th:text="${board.title}">제목</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <hr class="divider">
+    <br>
+    <div class="content-section">
+        <div class="content-value" th:text="${board.content}">내용</div>
+    </div>
+
+
+
+    <!-- 댓글 목록 추가 -->
+    <div class="comment-section">
+        <h5>댓글 목록</h5>
+        <div class="comment-list">
+            <!-- 댓글 목록을 서버에서 동적으로 생성 -->
+            <div th:each="comment : ${comments}" class="comment-item">
+                <strong th:text="${comment.username}">작성자</strong>: <span th:text="${comment.content}">댓글 내용</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 댓글 작성란 추가 -->
+    <div class="comment-section">
+        <h7>댓글 작성</h7>
+        <form action="/comment/save" method="post">
+            <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <textarea class="form-control comment-input" name="content" rows="4" placeholder="댓글 작성하기" required></textarea>
+            <button type="submit" class="btn btn-primary comment-button">댓글 작성</button>
+        </form>
+    </div>
+
+    <!-- 수정 및 삭제 버튼 추가 -->
+
+    <div class="edit-delete-buttons mt-3" th:if="${session.username == board.username}">
+        <a th:href="@{/board/edit/{boardId}(boardId=${board.boardId})}" class="btn btn-edit">수정</a>
+        <form th:action="@{/board/delete/{boardId}(boardId=${board.boardId})}" method="post" class="d-inline ms-2">
+            <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <button type="submit" class="btn btn-delete">삭제</button>
+        </form>
     </div>
 
 
 </div>
 
-<footer class="py-5 text-center text-body-secondary bg-body-tertiary" style="width: 100%; position: absolute; bottom: 0; text-align: center;">
-    <p>테스트 중..</p>
-    <p class="mb-0">
-        <a href="#">Back to top</a>
-    </p>
-</footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
