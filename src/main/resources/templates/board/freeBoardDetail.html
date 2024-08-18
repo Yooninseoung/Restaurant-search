@@ -154,6 +154,34 @@
             background-color: #c82333; /* 버튼 호버 시 진한 빨간색 */
             color: #fff; /* 흰색 텍스트 */
         }
+
+
+        .btn-like {
+            background-color: #ffc107; /* 노란색 배경 */
+            color: #000000; /* 흰색 텍스트 */
+            border: none; /* 기본 버튼 테두리 제거 */
+        }
+
+        .btn-report {
+            background-color: #dc3545; /* 빨간색 배경 */
+            color: #000000; /* 흰색 텍스트 */
+            border: none; /* 기본 버튼 테두리 제거 */
+        }
+
+        .btn-like:hover {
+            background-color: #e0a800; /* 호버 시 진한 노란색 */
+            color: #fff; /* 흰색 텍스트 */
+        }
+
+        .btn-report:hover {
+            background-color: #c82333; /* 호버 시 진한 빨간색 */
+            color: #fff; /* 흰색 텍스트 */
+        }
+
+        .action-buttons {
+            text-align: right; /* 버튼을 오른쪽으로 정렬 */
+            margin-bottom: 20px; /* 버튼과 다른 요소 간의 간격 조정 */
+        }
     </style>
 </head>
 <body>
@@ -207,10 +235,13 @@
     <hr class="divider">
     <br>
     <div class="content-section">
+        <h4>내용</h4>
         <div class="content-value" th:text="${board.content}">내용</div>
     </div>
 
-
+    <div th:if="${board == null}">
+        <p>게시글을 찾을 수 없습니다.</p>
+    </div>
 
     <!-- 댓글 목록 추가 -->
     <div class="comment-section">
@@ -226,16 +257,22 @@
 
     <!-- 댓글 작성란 추가 -->
     <div class="comment-section">
-        <h7>댓글 작성</h7>
-        <form action="/comment/save" method="post">
+        <h5>댓글 작성</h5>
+        <form action="/comments/add" method="post">
             <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <input type="hidden" name="username" th:value="${session.username}" /> <!-- 로그인한 사용자 이름 -->
             <textarea class="form-control comment-input" name="content" rows="4" placeholder="댓글 작성하기" required></textarea>
             <button type="submit" class="btn btn-primary comment-button">댓글 작성</button>
         </form>
     </div>
 
-    <!-- 수정 및 삭제 버튼 추가 -->
+    <!-- 좋아요 및 신고하기 버튼 추가 -->
+    <div class="action-buttons text-end">
+        <button type="button" class="btn btn-like">좋아요</button>
+        <button type="button" class="btn btn-report">신고하기</button>
+    </div>
 
+    <!-- 수정 및 삭제 버튼 추가 -->
     <div class="edit-delete-buttons mt-3" th:if="${session.username == board.username}">
         <a th:href="@{/board/edit/{boardId}(boardId=${board.boardId})}" class="btn btn-edit">수정</a>
         <form th:action="@{/board/delete/{boardId}(boardId=${board.boardId})}" method="post" class="d-inline ms-2">

@@ -1,7 +1,9 @@
 package com.restaurant.Restaurant_search.controller;
 
 import com.restaurant.Restaurant_search.entity.Board;
+import com.restaurant.Restaurant_search.entity.Comment;
 import com.restaurant.Restaurant_search.service.BoardService;
+import com.restaurant.Restaurant_search.service.CommentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CommentService commentService;  // CommentService 필드 주입 추가
 
     // 게시글 목록 페이지를 보여주는 메소드 (페이징 기능 추가)
     @GetMapping
@@ -85,6 +90,11 @@ public class BoardController {
         if (optionalBoard.isPresent()) {
             Board board = optionalBoard.get(); // Optional에서 실제 Board 객체를 추출
             model.addAttribute("board", board);
+
+            // 댓글 목록 추가
+            List<Comment> comments = commentService.getCommentsByBoardId(boardId); // CommentService를 통해 댓글 목록 조회
+            model.addAttribute("comments", comments);
+
             return "board/freeBoardDetail"; // "board/boardDetail.html"을 반환
         } else {
             return "redirect:/board"; // 게시글 목록 페이지로 리다이렉트

@@ -12,7 +12,6 @@ public class CommonDataID implements Serializable {
 
     private String userID;
 
-
     private Integer restaurantID;
 
     // Constructors
@@ -22,6 +21,7 @@ public class CommonDataID implements Serializable {
     public CommonDataID(String userID, Integer restaurantID) {
         this.userID = userID;
         this.restaurantID = restaurantID;
+
     }
 
     // Getters and Setters
@@ -41,6 +41,7 @@ public class CommonDataID implements Serializable {
     public void setRestaurantID(Integer restaurantID) {
         this.restaurantID = restaurantID;
     }
+
 
 
 

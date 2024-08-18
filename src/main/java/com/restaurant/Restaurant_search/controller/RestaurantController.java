@@ -68,6 +68,7 @@ public class RestaurantController {
         Integer restaurantId = Integer.parseInt(req.getParameter("restaurantId")); //식당 id를 받아와 조회함
 
 
+
         CommonDataID commonDataID = new CommonDataID(userId, restaurantId); //좋아요, 싫어요 table의 기본키
 
         boolean flag;

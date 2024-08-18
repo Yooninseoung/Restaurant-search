@@ -23,7 +23,7 @@ public class Board {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content; // 글내용
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", length = 50, nullable = false)
     private String username; // 글쓴이 (user 테이블의 username과 연관)
 
     @Column(name = "write_date", nullable = false, updatable = false)
