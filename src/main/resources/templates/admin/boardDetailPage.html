@@ -60,7 +60,7 @@
     ★해당 게시글 삭제하기(<b>복구 불가<b>) : <a th:href="@{/manage/delete/{boardId}(boardId=${board.boardId})}" class="btn btn-danger" >삭제</a>
 
 
-    <br><br><br><br>
+    <br><br><br><br><hr>
 
     <!-- 댓글 목록 추가 -->
     <div class="comment-section">
@@ -69,22 +69,12 @@
             <!-- 댓글 목록을 서버에서 동적으로 생성 -->
             <div th:each="comment : ${comments}" class="comment-item">
                 <strong th:text="${comment.username}">작성자</strong>: <span th:text="${comment.content}">댓글 내용</span>
+                <button type="button" class="btn btn-warning"
+                        th:onclick="|location.href='@{/manage/deleteBoardComment(commentId=${comment.commentId}, boardId=${board.boardId})}'|">삭제
+                </button>
             </div>
         </div>
     </div>
-
-
-    <!-- 댓글 작성란 추가 -->
-    <div class="comment-section">
-        <h7>댓글 작성</h7>
-        <form action="/comment/save" method="post">
-            <input type="hidden" name="boardId" th:value="${board.boardId}" />
-            <textarea class="form-control comment-input" name="content" rows="4" placeholder="댓글 작성하기" required></textarea>
-            <button type="submit" class="btn btn-primary comment-button">댓글 작성</button>
-        </form>
-    </div>
-
-
 
 
 

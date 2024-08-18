@@ -50,4 +50,8 @@ public class CommentService {
         // Board 객체를 사용하여 댓글 조회
         return commentRepository.findByBoard(board);
     }
+
+    public void deleteComment(Integer commentId){
+        commentRepository.deleteById(commentId);
+    }
 }

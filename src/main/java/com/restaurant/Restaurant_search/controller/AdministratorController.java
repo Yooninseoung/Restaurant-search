@@ -1,6 +1,7 @@
 package com.restaurant.Restaurant_search.controller;
 
 import com.restaurant.Restaurant_search.entity.Board;
+import com.restaurant.Restaurant_search.entity.Comment;
 import com.restaurant.Restaurant_search.entity.Restaurant;
 import com.restaurant.Restaurant_search.entity.Review;
 import com.restaurant.Restaurant_search.service.*;
@@ -37,6 +38,9 @@ public class AdministratorController {
 
     @Autowired
     private JavaReadCsvService javaReadCsvService;
+
+    @Autowired
+    CommentService commentService;
 
 
     @RequestMapping("/csvToDb") //원주시 식당 csv 파일을 db에 저장
@@ -95,6 +99,11 @@ public class AdministratorController {
         if (optionalBoard.isPresent()) {
             Board board = optionalBoard.get(); // Optional에서 실제 Board 객체를 추출
             model.addAttribute("board", board);
+
+            // 댓글 목록 추가
+            List<Comment> comments = commentService.getCommentsByBoardId(boardId); // CommentService를 통해 댓글 목록 조회
+            model.addAttribute("comments", comments);
+
             return "admin/boardDetailPage"; // "board/boardDetail.html"을 반환
         } else {
             return "redirect:/manage/board"; // 게시글 목록 페이지로 리다이렉트
@@ -107,6 +116,15 @@ public class AdministratorController {
         return "redirect:/manage/board";
     }
 
+
+    @GetMapping("/deleteBoardComment") //게시글 댓글 삭제
+    public String deleteBoardComment(@RequestParam("commentId") Integer commentId,
+                                     @RequestParam("boardId") Integer boardId){
+        commentService.deleteComment(commentId);
+        return "redirect:/manage/detail/"+boardId;
+    }
+
+
     @PostMapping("/restaurantAdd") //식당 등록
     public String addRestaurant(@RequestParam("file") MultipartFile file,
                                 @ModelAttribute Restaurant restaurant) throws IOException {
@@ -116,6 +134,7 @@ public class AdministratorController {
 
         return "admin/adminPage";
     }
+
 
     @PostMapping("/searchRestaurant") //관리자 화면에서 검색
     public String searRestaurant(HttpServletRequest req, Model model){
