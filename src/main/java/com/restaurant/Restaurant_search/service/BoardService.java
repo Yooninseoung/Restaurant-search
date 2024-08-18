@@ -81,6 +81,8 @@ public class BoardService {
     }
 
 
+
+
     public void deleteBoard(Integer boardId) {
         boardRepository.deleteById(boardId);
     }

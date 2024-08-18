@@ -29,6 +29,8 @@ public class CommentController {
             return "redirect:/login";
         }
 
+
+
         // 댓글 추가
         Comment comment = commentService.addComment(boardId, username, content);
 
