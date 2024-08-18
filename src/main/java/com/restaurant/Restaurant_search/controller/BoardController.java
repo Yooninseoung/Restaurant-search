@@ -2,8 +2,11 @@ package com.restaurant.Restaurant_search.controller;
 
 import com.restaurant.Restaurant_search.entity.Board;
 import com.restaurant.Restaurant_search.entity.Comment;
+import com.restaurant.Restaurant_search.entity.CommonReportID;
+import com.restaurant.Restaurant_search.entity.Report;
 import com.restaurant.Restaurant_search.service.BoardService;
 import com.restaurant.Restaurant_search.service.CommentService;
+import com.restaurant.Restaurant_search.service.ReportService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +32,9 @@ public class BoardController {
 
     @Autowired
     private CommentService commentService;  // CommentService 필드 주입 추가
+
+    @Autowired
+    private ReportService reportService;
 
     // 게시글 목록 페이지를 보여주는 메소드 (페이징 기능 추가)
     @GetMapping
@@ -160,4 +166,28 @@ public class BoardController {
 
         return "redirect:/board"; // 게시글 목록 페이지로 리다이렉트
     }
+
+    @GetMapping("report")
+    public String addReport (@RequestParam("boardID") Integer boardId,
+                             @RequestParam("userId") String userId)     {
+        CommonReportID commonReport = new CommonReportID(userId, boardId);
+        Report report = new Report(commonReport);
+
+        Board board = boardService.getReportBoardById(boardId);
+
+
+    if(reportService.existReport(report)){
+        reportService.deleteReport(report);
+    }
+    else {
+        reportService.addReport(report);
+    }
+
+        board.setReports(reportService.countReport(boardId));
+        boardService.saveBoard(board);
+
+        return "redirect:/board/detail/" + boardId;
+
+    }
+
 }

@@ -272,7 +272,8 @@
     <!-- 좋아요 및 신고하기 버튼 추가 -->
     <div class="action-buttons text-end">
         <button type="button" class="btn btn-like">좋아요</button>
-        <button type="button" class="btn btn-report">신고하기</button>
+        <a th:href="@{/board/report(boardID=${board.boardId}, userId=${session.userId})}" class="btn btn-report">신고하기</a>
+
     </div>
 
     <!-- 수정 및 삭제 버튼 추가 -->

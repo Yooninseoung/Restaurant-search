@@ -32,6 +32,9 @@ public class Board {
     @Column(name = "likes", nullable = true)
     private Integer likes; // 좋아요 수, NULL 가능
 
+    @Column(name = "reports", nullable = true)
+    private Integer reports; // 신고하기 수, NULL 가능
+
     @Column(name = "photo_path", length = 255, nullable = true)
     private String photoPath; // 사진 경로
 
@@ -103,6 +106,10 @@ public class Board {
     public Integer getLikes() { return likes; }
 
     public void setLikes(Integer likes) { this.likes = likes; }
+
+    public Integer getReports() { return reports; }
+
+    public void setReports(Integer reports) { this.reports = reports; }
 
     public String getPhotoPath() {
         return photoPath;

@@ -42,6 +42,9 @@ public class AdministratorController {
     @Autowired
     CommentService commentService;
 
+    ReportService reportService;
+
+
 
     @RequestMapping("/csvToDb") //원주시 식당 csv 파일을 db에 저장
     public String csv(Model model){
@@ -86,7 +89,6 @@ public class AdministratorController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-
 
         return "admin/boardManagePage";
     }
