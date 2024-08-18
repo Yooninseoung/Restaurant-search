@@ -17,8 +17,8 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/add")
-    public String addComment(@RequestParam Integer boardId,
-                             @RequestParam String content,
+    public String addComment(@RequestParam("boardId") Integer boardId,
+                             @RequestParam("content") String content,
                              HttpSession session,
                              RedirectAttributes redirectAttributes) {
 

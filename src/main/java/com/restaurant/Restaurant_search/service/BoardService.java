@@ -55,7 +55,7 @@ public class BoardService {
 
     // 파일을 업로드하는 메소드
     public String uploadFile(MultipartFile file, Integer boardId) throws IOException {
-        String projectPath = "src/main/resources/static/img/files"; // 파일 저장 경로
+        String projectPath = "src/main/resources/static/img/boardImg"; // 파일 저장 경로
         File directory = new File(projectPath);
 
         // 디렉토리가 존재하지 않으면 생성
@@ -77,7 +77,7 @@ public class BoardService {
         // 파일 저장
         Files.copy(file.getInputStream(), saveFile.toPath());
 
-        return "/img/files/" + fileName; // 저장된 파일의 상대 경로 반환
+        return "/img/boardImg/" + fileName; // 저장된 파일의 상대 경로 반환
     }
 
 
