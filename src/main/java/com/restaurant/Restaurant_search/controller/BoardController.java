@@ -173,7 +173,7 @@ public class BoardController {
         CommonReportID commonReport = new CommonReportID(userId, boardId);
         Report report = new Report(commonReport);
 
-        System.out.println(boardId);
+        Board board = boardService.getReportBoardById(boardId);
 
 
     if(reportService.existReport(report)){
@@ -182,7 +182,10 @@ public class BoardController {
     else {
         reportService.addReport(report);
     }
-System.out.println("확인2");
+
+        board.setReports(reportService.countReport(boardId));
+        boardService.saveBoard(board);
+
         return "redirect:/board/detail/" + boardId;
 
     }

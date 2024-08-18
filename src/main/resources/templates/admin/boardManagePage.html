@@ -40,6 +40,7 @@
             <th class="title" scope="col">제목</th>
             <th class="username" scope="col">글쓴이</th>
             <th class="date" scope="col">작성일</th>
+            <th>신고 수</th>
         </tr>
         </thead>
         <tbody>
@@ -49,6 +50,7 @@
             <td th:text="${item.title}"></td>
             <td th:text="${item.username}"></td>
             <td th:text="${#temporals.format(item.writeDate, 'yyyy.MM.dd')}"></td>
+            <td th:text="${item.reports}"></td>
         </tr>
         </tbody>
     </table>

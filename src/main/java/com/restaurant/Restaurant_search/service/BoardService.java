@@ -33,6 +33,11 @@ public class BoardService {
         return boardRepository.findById(boardId);
     }
 
+    public Board getReportBoardById(Integer boardId) {
+        Optional<Board> board = boardRepository.findById(boardId);
+        return board.orElse(null); //값이 있으면 board를 없으면 null 반환
+    }
+
     // 게시글 저장 및 파일 업로드 메소드
     public void writeBoard(Board board, MultipartFile file, String username) throws IOException {
         Integer boardId = board.getBoardId(); // 게시글 ID 가져오기

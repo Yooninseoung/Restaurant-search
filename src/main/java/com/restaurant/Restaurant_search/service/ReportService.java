@@ -25,7 +25,7 @@ public class ReportService {
         return reportRepository.existsByBoardIdAndUserId(report.getCommonReportID().getBoardId(), report.getCommonReportID().getUserID());
     }
 
-    public int countReport(Report report){
-        return reportRepository.countByBoardID(report.getCommonReportID().getBoardId());
+    public int countReport(Integer boardId){
+        return reportRepository.countByBoardID(boardId);
     }
 }
