@@ -1,11 +1,11 @@
 package com.restaurant.Restaurant_search.service;
 
 import com.restaurant.Restaurant_search.entity.Bookmark;
-import com.restaurant.Restaurant_search.entity.CommonDataID;
-import com.restaurant.Restaurant_search.entity.LikeData;
 import com.restaurant.Restaurant_search.repository.BookmarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookmarkService {
@@ -29,4 +29,10 @@ public class BookmarkService {
     public int countBookmark(Integer restaurantId){
         return bookmarkRepository.countByRestaurantId(restaurantId);
     }
+
+
+    public List<Long> getRestaurantIdsByUserId(String userId) {
+        return bookmarkRepository.findRestaurantIdsByUserId(userId);
+    }
+
 }

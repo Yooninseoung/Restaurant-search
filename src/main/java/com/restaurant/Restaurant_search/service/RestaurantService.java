@@ -115,4 +115,10 @@ public class RestaurantService {
         return postsPages;
 
     }
+
+
+    public List<Restaurant> findByFavoriteRestaurants(List<Long> restaurantList){
+        return restaurantRepository.findByRestaurantIDIn(restaurantList);
+    }
+
 }

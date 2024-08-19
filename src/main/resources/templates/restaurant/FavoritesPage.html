@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My 맛집</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+
+    </style>
+</head>
+<body>
+
+<header data-bs-theme="dark">
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a href="/index" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <strong>GangwonCook</strong>
+            </a>
+
+            <div class="text-end">
+                <div th:if="${session.userId != null}">
+                    <span style="color:white;">환영합니다! <span th:text="${session.userId}"></span>님</span>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/logout'">Logout</button>
+                </div>
+                <div th:unless="${session.userId != null}">
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/login'">Login</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/user/signUp'">Sign-up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <h1 style="margin-left: 150px; margin-top: 50px; margin-bottom: 25px;">MY 맛집 리스트</h1>
+
+    <table class="table" style="width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
+        <thead>
+        <tr>
+            <th class="title" scope="col">식당명</th>
+            <th class="username" scope="col">장소</th>
+            <th class="date" scope="col">평점</th>
+            <th scope="col">해제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 게시글 목록 반복 -->
+        <tr th:each="item : ${restaurants}" class="clickable-row">
+
+            <td th:text="${item.restaurantName}"  th:onclick="|location.href='@{/restaurant/detailScreen(restaurantId=${item.restaurantID})}'|" >
+                칼국수</td>
+            <td th:text="${item.address}"  th:onclick="|location.href='@{/restaurant/detailScreen(restaurantId=${item.restaurantID})}'|" >
+                단계동</td>
+            <td th:text="${item.rating}"  th:onclick="|location.href='@{/restaurant/detailScreen(restaurantId=${item.restaurantID})}'|" >
+                4.5</td>
+            <td><button type="button" class="btn btn-warning" th:onclick="|location.href='@{/mark/favorites(restaurantId=${item.restaurantID})}'|">해제</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
