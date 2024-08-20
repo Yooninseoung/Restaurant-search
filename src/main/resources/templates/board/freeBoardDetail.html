@@ -157,25 +157,62 @@
 
 
         .btn-like {
-            background-color: #ffc107; /* 노란색 배경 */
-            color: #000000; /* 흰색 텍스트 */
+            background-color: #28a745; /* 밝은 녹색 배경 */
+            color: #ffffff; /* 흰색 텍스트 */
             border: none; /* 기본 버튼 테두리 제거 */
+            padding: 10px 20px; /* 버튼 패딩 */
+            border-radius: 5px; /* 버튼 테두리 둥글게 */
+            font-size: 16px; /* 글씨 크기 */
+            font-family: 'Arial', sans-serif; /* 글꼴 설정 */
+            font-weight: 600; /* 글씨 두께 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            text-decoration: none; /* 링크 텍스트 장식 제거 */
+            display: inline-flex; /* 버튼 내 요소 정렬을 위한 Flexbox 사용 */
+            align-items: center; /* 수직 중앙 정렬 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 버튼 그림자 */
+            transition: background-color 0.3s, box-shadow 0.3s; /* 부드러운 색상 전환 */
         }
 
+
         .btn-report {
-            background-color: #dc3545; /* 빨간색 배경 */
-            color: #000000; /* 흰색 텍스트 */
+            background-color: #dc3545; /* 깊은 빨간색 배경 */
+            color: #ffffff; /* 흰색 텍스트 */
             border: none; /* 기본 버튼 테두리 제거 */
+            padding: 10px 20px; /* 버튼 패딩 */
+            border-radius: 5px; /* 버튼 테두리 둥글게 */
+            font-size: 16px; /* 글씨 크기 */
+            font-family: 'Arial', sans-serif; /* 글꼴 설정 */
+            font-weight: 600; /* 글씨 두께 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            text-decoration: none; /* 링크 텍스트 장식 제거 */
+            display: inline-flex; /* 버튼 내 요소 정렬을 위한 Flexbox 사용 */
+            align-items: center; /* 수직 중앙 정렬 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 버튼 그림자 */
+            transition: background-color 0.3s, box-shadow 0.3s; /* 부드러운 색상 전환 */
         }
 
         .btn-like:hover {
-            background-color: #e0a800; /* 호버 시 진한 노란색 */
-            color: #fff; /* 흰색 텍스트 */
+            background-color: #218838; /* 호버 시 진한 녹색 */
+            color: #ffffff; /* 흰색 텍스트 */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* 호버 시 더 진한 그림자 */
+        }
+
+        .btn-like span {
+            margin-left: 8px; /* 아이콘과 텍스트 사이 여백 */
+            font-size: 18px; /* 텍스트 크기 조정 */
+            font-weight: 700; /* 텍스트 두께 조정 */
         }
 
         .btn-report:hover {
-            background-color: #c82333; /* 호버 시 진한 빨간색 */
-            color: #fff; /* 흰색 텍스트 */
+            background-color: #c82333; /* 호버 시 더 진한 빨간색 */
+            color: #ffffff; /* 흰색 텍스트 */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* 호버 시 더 진한 그림자 */
+        }
+
+        .btn-report span {
+            margin-left: 8px; /* 아이콘과 텍스트 사이 여백 */
+            font-size: 18px; /* 텍스트 크기 조정 */
+            font-weight: 700; /* 텍스트 두께 조정 */
         }
 
         .action-buttons {
@@ -269,10 +306,26 @@
         </form>
     </div>
 
+
+    <script>
+        function confirmReport() {
+            // 사용자에게 확인 대화 상자 표시
+            return confirm("정말로 해당 게시글을 신고하시겠습니까?");
+        }
+    </script>
+
     <!-- 좋아요 및 신고하기 버튼 추가 -->
     <div class="action-buttons text-end">
-        <button type="button" class="btn btn-like">좋아요</button>
-        <a th:href="@{/board/report(boardID=${board.boardId}, userId=${session.userId})}" class="btn btn-report">신고하기</a>
+        <a th:href="@{/board/boardlike(boardID=${board.boardId}, userId=${session.userId})}" class="btn btn-like">좋아요
+
+            <span class="like-count" th:text="${board.boardLikes}">0</span>
+        </a>
+
+
+        <a th:href="@{/board/report(boardID=${board.boardId}, userId=${session.userId})}" class="btn btn-report"
+           onclick="return confirmReport();">신고하기
+            <span class="report-count" th:text="${board.reports}">0</span>
+        </a>
 
     </div>
 

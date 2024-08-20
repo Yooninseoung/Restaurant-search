@@ -1,9 +1,7 @@
 package com.restaurant.Restaurant_search.controller;
 
-import com.restaurant.Restaurant_search.entity.Board;
-import com.restaurant.Restaurant_search.entity.Comment;
-import com.restaurant.Restaurant_search.entity.CommonReportID;
-import com.restaurant.Restaurant_search.entity.Report;
+import com.restaurant.Restaurant_search.entity.*;
+import com.restaurant.Restaurant_search.service.BoardLikeService;
 import com.restaurant.Restaurant_search.service.BoardService;
 import com.restaurant.Restaurant_search.service.CommentService;
 import com.restaurant.Restaurant_search.service.ReportService;
@@ -35,6 +33,9 @@ public class BoardController {
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private BoardLikeService boardlikeService;
 
     // 게시글 목록 페이지를 보여주는 메소드 (페이징 기능 추가)
     @GetMapping
@@ -184,6 +185,31 @@ public class BoardController {
     }
 
         board.setReports(reportService.countReport(boardId));
+        boardService.saveBoard(board);
+
+        return "redirect:/board/detail/" + boardId;
+
+    }
+
+    @GetMapping("boardlike")
+    public String addBoardLike (@RequestParam("boardID") Integer boardId,
+                             @RequestParam("userId") String userId) {
+
+        CommonBoardLikeID commonBoardLikeID = new CommonBoardLikeID(userId, boardId);
+        BoardLike boardlike = new BoardLike(commonBoardLikeID, 1); // 기본 좋아요 수를 1으로 설정
+
+        Board board = boardService.getBoardLikeBoardById(boardId); // 변경된 메서드 이름 사용
+
+
+        if(boardlikeService.existBoardLike(boardlike)){
+            boardlikeService.deleteBoardLike(boardlike);
+        }
+        else {
+            boardlikeService.addBoardLike(boardlike);
+        }
+
+
+        board.setBoardLikes(boardlikeService.countBoardLike(boardId));
         boardService.saveBoard(board);
 
         return "redirect:/board/detail/" + boardId;

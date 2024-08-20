@@ -29,11 +29,13 @@ public class Board {
     @Column(name = "write_date", nullable = false, updatable = false)
     private LocalDateTime writeDate; // 작성일
 
-    @Column(name = "likes", nullable = true)
-    private Integer likes; // 좋아요 수, NULL 가능
+    @Column(name = "boardlikes", nullable = true)
+    private Integer boardlikes; // 좋아요 수, NULL 가능
 
     @Column(name = "reports", nullable = true)
     private Integer reports; // 신고하기 수, NULL 가능
+
+
 
     @Column(name = "photo_path", length = 255, nullable = true)
     private String photoPath; // 사진 경로
@@ -103,13 +105,13 @@ public class Board {
         this.writeDate = writeDate;
     }
 
-    public Integer getLikes() { return likes; }
-
-    public void setLikes(Integer likes) { this.likes = likes; }
-
     public Integer getReports() { return reports; }
 
     public void setReports(Integer reports) { this.reports = reports; }
+
+    public Integer getBoardLikes() { return boardlikes; }
+
+    public void setBoardLikes(Integer boardlikes) { this.boardlikes = boardlikes; }
 
     public String getPhotoPath() {
         return photoPath;
