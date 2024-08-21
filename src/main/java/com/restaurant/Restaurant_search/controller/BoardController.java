@@ -60,6 +60,28 @@ public class BoardController {
         return "board/freeBoard"; // "board/freeBoard.html"을 반환
     }
 
+    @GetMapping("/showFreeBoardLikesPage")
+    public String showFreeBoardLikesPage(@PageableDefault(page = 0, size = 10, sort = "boardlikes", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+
+        Page<Board> boardsPage = boardService.getAllBoards(pageable); // 서비스 호출
+        int totalPages = boardsPage.getTotalPages();
+        int currentPage = boardsPage.getNumber() + 1; // 현재 페이지 (0부터 시작)
+
+        // 시작 페이지 계산: 현재 페이지를 기준으로 앞 4개 페이지를 보여줌
+        int startPage = Math.max(1, currentPage - 4);
+
+        // 종료 페이지 계산: 현재 페이지를 기준으로 뒤 5개 페이지를 보여줌
+        int endPage = Math.min(totalPages, currentPage + 5);
+
+        model.addAttribute("boards", boardsPage.getContent());
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "board/freeBoard"; // "board/freeBoard.html"을 반환
+    }
+
     // 게시글 작성 페이지를 보여주는 메소드
     @GetMapping("write")
     public String showFreeBoardWritePage() {

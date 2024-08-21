@@ -56,16 +56,19 @@
         }
 
         .table th.number {
-            width: 10%;
+            width: 5%;
         }
         .table th.title {
-            width: 60%;
+            width: 55%;
         }
         .table th.username {
             width: 15%;
         }
         .table th.date {
             width: 15%;
+        }
+        .table th.likes {
+            width: 10%;
         }
 
         .clickable-row {
@@ -117,7 +120,7 @@
     </div>
 
     <div style="margin-left: 150px;">
-        <a href="#" class="text-link">최신순</a> | <a href="#" class="text-link">인기순</a>
+        <a href="/board" class="text-link">최신순</a> | <a href="/board/showFreeBoardLikesPage" class="text-link">인기순</a>
     </div>
     <table class="table" style="width:80%; height:200px; margin-left: 10%; margin-right: 10%;">
         <thead>
@@ -126,6 +129,7 @@
             <th class="title" scope="col">제목</th>
             <th class="username" scope="col">글쓴이</th>
             <th class="date" scope="col">작성일</th>
+            <th class="likes" scope="col">좋아요</th>
         </tr>
         </thead>
         <tbody>
@@ -135,6 +139,7 @@
             <td th:text="${item.title}"></td>
             <td th:text="${item.username}"></td>
             <td th:text="${#temporals.format(item.writeDate, 'yyyy.MM.dd')}"></td>
+            <td th:text="${item.boardLikes}"></td>
         </tr>
         </tbody>
     </table>
