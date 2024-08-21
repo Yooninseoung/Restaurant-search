@@ -61,9 +61,12 @@ public class BookmarkController {
             return "redirect:/ranking";
         }else if(where.equals("search")){
             return "redirect:/index";
+        }else if(where.equals("favorites")){
+            return "redirect:/restaurant/favorites";
         }else{
             return "redirect:/restaurant/restaurantAllPage";
         }
 
     }
+
 }

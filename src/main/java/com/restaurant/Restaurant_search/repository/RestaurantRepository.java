@@ -20,4 +20,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     @Query("SELECT r FROM Restaurant r WHERE r.restaurantName LIKE %:searchName%")
     List<Restaurant> searchByRestaurantName(@Param("searchName") String searchName);
 
+    List<Restaurant> findByRestaurantIDIn(List<Long> restaurantIds);
+
 }

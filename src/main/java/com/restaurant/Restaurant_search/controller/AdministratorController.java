@@ -93,6 +93,30 @@ public class AdministratorController {
         return "admin/boardManagePage";
     }
 
+    @GetMapping("/orderByReportCount")
+    public String morderByReportCount(@PageableDefault(page = 0, size = 10, sort = "reports",
+            direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+
+
+        Page<Board> boardsPage = boardService.getAllBoards(pageable); // 서비스 호출
+        int totalPages = boardsPage.getTotalPages();
+        int currentPage = boardsPage.getNumber() + 1; // 현재 페이지 (0부터 시작)
+
+        // 시작 페이지 계산: 현재 페이지를 기준으로 앞 4개 페이지를 보여줌
+        int startPage = Math.max(1, currentPage - 4);
+
+        // 종료 페이지 계산: 현재 페이지를 기준으로 뒤 5개 페이지를 보여줌
+        int endPage = Math.min(totalPages, currentPage + 5);
+
+        model.addAttribute("boards", boardsPage.getContent());
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "admin/boardManagePage";
+    }
+
     @GetMapping("/detail/{boardId}")
     public String showBoardDetailPage(@PathVariable("boardId") Integer boardId, Model model) {
         Optional<Board> optionalBoard = boardService.getBoardById(boardId);

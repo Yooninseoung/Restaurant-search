@@ -1,6 +1,7 @@
 package com.restaurant.Restaurant_search.controller;
 
 import com.restaurant.Restaurant_search.entity.*;
+import com.restaurant.Restaurant_search.service.BookmarkService;
 import com.restaurant.Restaurant_search.service.LikeService;
 import com.restaurant.Restaurant_search.service.RestaurantService;
 import com.restaurant.Restaurant_search.service.ReviewService;
@@ -28,6 +29,9 @@ public class RestaurantController {
 
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    BookmarkService bookmarkService;
 
     @RequestMapping("/detailScreen") // 식당 세부 화면 조회
     public String detail(HttpServletRequest req, Model model, @PageableDefault(page = 1) Pageable pageable){
@@ -123,6 +127,15 @@ public class RestaurantController {
         model.addAttribute("endPage", endPage);
 
         return "restaurant/restaurantAllPage";
+    }
+
+    @GetMapping("/favorites")
+    public String showFavorites(Model model,
+                                @SessionAttribute(name = "userId", required = true) String userId){
+        List<Long> restaurantIds = bookmarkService.getRestaurantIdsByUserId(userId);
+        List<Restaurant> restaurants = restaurantService.findByFavoriteRestaurants(restaurantIds);
+        model.addAttribute("restaurants", restaurants);
+        return "restaurant/FavoritesPage";
     }
 
 
