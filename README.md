@@ -1,5 +1,6 @@
 ## 원주 지역 "식당 검색"
-![index](https://github.com/user-attachments/assets/cf19ca62-bc04-4319-8397-61fdd0e0c88c)
+![image](https://github.com/user-attachments/assets/a6e45b71-b216-4fab-8f84-b6f1030b6c51)
+
 
 **목차**
 > 1. 프로젝트 소개
