@@ -18,10 +18,11 @@ public class ReviewController {
     ReviewService reviewService;
 
     @GetMapping("/writeForm") //리뷰 작성 화면 반환
-    public String writeForm(HttpServletRequest req, Model model){
+    public String writeForm(HttpServletRequest req, Model model) {
         model.addAttribute("restaurantId", req.getParameter("restaurantId"));
         return "restaurant/restaurantReviewWrite";
     }
+
     @PostMapping("/writeForm") //리뷰 작성 버튼
     public String writeForm(@RequestParam("file") MultipartFile file,
                             @ModelAttribute Review review,

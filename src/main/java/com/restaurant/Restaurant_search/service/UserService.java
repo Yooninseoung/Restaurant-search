@@ -41,12 +41,12 @@ public class UserService {
         return user;
     }
 
-    public void deleteUserById(String userId){ //회원 삭제
+    public void deleteUserById(String userId) { //회원 삭제
         userRepository.deleteById(userId);
         System.out.print(userId);
     }
 
-    public User findByUserId(String userId){
+    public User findByUserId(String userId) {
 
         Optional<User> user = userRepository.findById(userId);
         return user.orElse(null); // 유져 존재하지 않으면 null을 반환하거나 예외를 던질 수 있음

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface BoardLikeRepository extends JpaRepository<BoardLike, Integer>{
+public interface BoardLikeRepository extends JpaRepository<BoardLike, Integer> {
 
     @Query("SELECT COUNT(e) FROM BoardLike e WHERE e.commonBoardLikeID.boardId = :boardId")
     int countByBoardId(@Param("boardId") Integer boardId);

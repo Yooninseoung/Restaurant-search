@@ -45,26 +45,25 @@ public class AdministratorController {
     ReportService reportService;
 
 
-
     @RequestMapping("/csvToDb") //원주시 식당 csv 파일을 db에 저장
-    public String csv(Model model){
+    public String csv(Model model) {
         javaReadCsvService.readCSV();
         return "redirect:/index";
     }
 
     @RequestMapping("/adminPage")
-    public String adminPage(){
+    public String adminPage() {
         return "admin/adminPage";
     }
 
     @GetMapping("/user")
-    public String manageUser(){
+    public String manageUser() {
 
         return "admin/userManagePage";
     }
 
     @GetMapping("/restaurant")
-    public String manageRestaurant(){
+    public String manageRestaurant() {
 
         return "admin/restaurantAdd";
     }
@@ -145,9 +144,9 @@ public class AdministratorController {
 
     @GetMapping("/deleteBoardComment") //게시글 댓글 삭제
     public String deleteBoardComment(@RequestParam("commentId") Integer commentId,
-                                     @RequestParam("boardId") Integer boardId){
+                                     @RequestParam("boardId") Integer boardId) {
         commentService.deleteComment(commentId);
-        return "redirect:/manage/detail/"+boardId;
+        return "redirect:/manage/detail/" + boardId;
     }
 
 
@@ -163,7 +162,7 @@ public class AdministratorController {
 
 
     @PostMapping("/searchRestaurant") //관리자 화면에서 검색
-    public String searRestaurant(HttpServletRequest req, Model model){
+    public String searRestaurant(HttpServletRequest req, Model model) {
         String searchName = req.getParameter("searchName");
         List<Restaurant> restaurants = restaurantService.searchRestaurants(searchName);
         model.addAttribute("restaurant", restaurants);
@@ -172,7 +171,7 @@ public class AdministratorController {
     }
 
     @RequestMapping("/restaurantEdit") // 관리자 : 식당 세부 화면 조회
-    public String detail(HttpServletRequest req, Model model, @PageableDefault(page = 1) Pageable pageable){
+    public String detail(HttpServletRequest req, Model model, @PageableDefault(page = 1) Pageable pageable) {
         String restaurantId = req.getParameter("restaurantId"); //식당 id를 받아와 조회함
 
         Restaurant restaurant = restaurantService.findRestaurant(Long.parseLong(restaurantId));//특정 식당의 정보를 갖고옴
@@ -201,7 +200,7 @@ public class AdministratorController {
 
     @PostMapping("/restaurantModify")
     public String restaurantModify(HttpServletRequest req,
-                                   @RequestParam("file") MultipartFile file) throws IOException{
+                                   @RequestParam("file") MultipartFile file) throws IOException {
         String restaurantId = req.getParameter("restaurantId"); //식당 id를 받아와 조회함
 
         Restaurant restaurant = restaurantService.findRestaurant(Long.parseLong(restaurantId));//특정 식당의 정보를 갖고옴
@@ -217,19 +216,18 @@ public class AdministratorController {
     }
 
     @GetMapping("/deleteRestaurant")
-    public String deleteRestaurant(HttpServletRequest req){
+    public String deleteRestaurant(HttpServletRequest req) {
         String restaurantId = req.getParameter("restaurantId"); //식당 id를 받아와 조회함
         restaurantService.removeRestaurant(Long.parseLong(restaurantId));//특정 식당의 정보를 삭제
         return "admin/adminPage";
     }
 
     @GetMapping("/deleteReview")
-    public String deleteReview(HttpServletRequest req){
+    public String deleteReview(HttpServletRequest req) {
         String reviewId = req.getParameter("reviewId"); //리뷰 id를 받아와 조회함
         reviewService.removeReview(Long.parseLong(reviewId));//특정 식당의 리뷰를 삭제
         return "admin/adminPage";
     }
-
 
 
 }

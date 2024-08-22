@@ -30,7 +30,6 @@ public class CommentController {
         }
 
 
-
         // 댓글 추가
         Comment comment = commentService.addComment(boardId, username, content);
 

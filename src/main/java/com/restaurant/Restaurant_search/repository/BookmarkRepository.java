@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BookmarkRepository  extends JpaRepository<Bookmark, Long> {
+public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     @Query("SELECT COUNT(e) FROM Bookmark e WHERE e.commonDataID.restaurantID = :restaurantId")
     int countByRestaurantId(@Param("restaurantId") Integer restaurantId);

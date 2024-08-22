@@ -16,10 +16,6 @@ public class Review {
     @Column(name = "reviewID")
     private Integer reviewID;
 
-//    @ManyToOne
-//    @JoinColumn(name = "restaurantID", nullable = false)
-//    private Restaurant restaurant;
-
     @JoinColumn(name = "restaurantId", nullable = false)
     private Integer restaurantId;
 
@@ -33,7 +29,7 @@ public class Review {
     private BigDecimal rating;
 
     @Column(name = "photo_path", length = 255)
-    private String  photo_path;
+    private String photo_path;
 
     // Getters and Setters
 }

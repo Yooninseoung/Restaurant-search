@@ -51,7 +51,7 @@ public class CommentService {
         return commentRepository.findByBoard(board);
     }
 
-    public void deleteComment(Integer commentId){
+    public void deleteComment(Integer commentId) {
         commentRepository.deleteById(commentId);
     }
 }

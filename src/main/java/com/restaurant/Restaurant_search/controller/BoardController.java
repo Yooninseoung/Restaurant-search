@@ -191,20 +191,19 @@ public class BoardController {
     }
 
     @GetMapping("report")
-    public String addReport (@RequestParam("boardID") Integer boardId,
-                             @RequestParam("userId") String userId)     {
+    public String addReport(@RequestParam("boardID") Integer boardId,
+                            @RequestParam("userId") String userId) {
         CommonReportID commonReport = new CommonReportID(userId, boardId);
         Report report = new Report(commonReport);
 
         Board board = boardService.getReportBoardById(boardId);
 
 
-    if(reportService.existReport(report)){
-        reportService.deleteReport(report);
-    }
-    else {
-        reportService.addReport(report);
-    }
+        if (reportService.existReport(report)) {
+            reportService.deleteReport(report);
+        } else {
+            reportService.addReport(report);
+        }
 
         board.setReports(reportService.countReport(boardId));
         boardService.saveBoard(board);
@@ -214,8 +213,8 @@ public class BoardController {
     }
 
     @GetMapping("boardlike")
-    public String addBoardLike (@RequestParam("boardID") Integer boardId,
-                             @RequestParam("userId") String userId) {
+    public String addBoardLike(@RequestParam("boardID") Integer boardId,
+                               @RequestParam("userId") String userId) {
 
         CommonBoardLikeID commonBoardLikeID = new CommonBoardLikeID(userId, boardId);
         BoardLike boardlike = new BoardLike(commonBoardLikeID, 1); // 기본 좋아요 수를 1으로 설정
@@ -223,10 +222,9 @@ public class BoardController {
         Board board = boardService.getBoardLikeBoardById(boardId); // 변경된 메서드 이름 사용
 
 
-        if(boardlikeService.existBoardLike(boardlike)){
+        if (boardlikeService.existBoardLike(boardlike)) {
             boardlikeService.deleteBoardLike(boardlike);
-        }
-        else {
+        } else {
             boardlikeService.addBoardLike(boardlike);
         }
 

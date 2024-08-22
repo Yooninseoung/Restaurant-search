@@ -8,19 +8,19 @@
 <h1>관리자 전용 화면</h1>
 
 <div>회원 관리 :
-    <form method="get" action="/user/searchUser" >
+    <form method="get" action="/user/searchUser">
         <input type="search" placeholder="회원의 아이디 " name="searchId">
-        <button type="submit"  >🔍</button>
+        <button type="submit">🔍</button>
     </form>
 </div>
 <br><br/>
 
 <div>식당 및 리뷰 관리 :
-    <form method="post" action="/manage/searchRestaurant" >
+    <form method="post" action="/manage/searchRestaurant">
         <input type="search" placeholder="식당 이름 " name="searchName">
-        <button type="submit"  >🔍</button>
+        <button type="submit">🔍</button>
     </form>
-    <a href="/manage/restaurant" >식당 추가</a>
+    <a href="/manage/restaurant">식당 추가</a>
 </div>
 <br><br/>
 <a href="/manage/board">자유 게시판 관리</a>
@@ -28,7 +28,7 @@
 <a href="/">기본 페이지로 이동</a>
 <br><br><br>
 경고! : 세팅 시 처음 한번만 누르세요!!
-<a href="/manage/csvToDb 'remove here' ">(원주)식당 데이터베이스 가져오기</a> <!-- 실제 사용 시 remove here 제거해야 함-->
+<a href="/manage/csvToDb">(원주)식당 데이터베이스 가져오기</a> <!-- 실제 사용 시 remove here 제거해야 함-->
 
 </body>
 </html>

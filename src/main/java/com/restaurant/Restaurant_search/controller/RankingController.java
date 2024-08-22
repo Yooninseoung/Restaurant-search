@@ -13,8 +13,9 @@ import java.util.List;
 public class RankingController {
     @Autowired
     RestaurantService restaurantService;
+
     @GetMapping("/ranking") //랭킹 페이지
-    public String rank(Model model){
+    public String rank(Model model) {
         List<Restaurant> restaurants = restaurantService.rankRestaurantList();
         model.addAttribute("restaurant", restaurants);
         return "search/Rankingsearch";

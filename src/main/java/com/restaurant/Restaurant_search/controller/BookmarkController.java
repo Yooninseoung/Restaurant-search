@@ -27,7 +27,7 @@ public class BookmarkController {
     @Autowired
     RestaurantService restaurantService;
 
-    @RequestMapping(value="/mark/{where}", method= RequestMethod.GET) //즐겨찾기 추가 버튼
+    @RequestMapping(value = "/mark/{where}", method = RequestMethod.GET) //즐겨찾기 추가 버튼
     public String bookmark(HttpServletRequest req,
                            @PathVariable("where") String where,
                            @SessionAttribute(name = "userId", required = false) String userId) throws UnsupportedEncodingException {
@@ -40,9 +40,9 @@ public class BookmarkController {
 
         flag = bookmarkService.existBookmrk(restaurantID, userId); //북마크 테이블에 데이터가 존재하는지 확인
         Bookmark bookmark = new Bookmark(commonDataID); // entity객체
-        if(flag){ //true : 데이터가 있음 -> 데이터를 삭제
+        if (flag) { //true : 데이터가 있음 -> 데이터를 삭제
             bookmarkService.deleteBookmark(bookmark);
-        }else {
+        } else {
             bookmarkService.addBookmark(bookmark);
         }
 
@@ -53,17 +53,17 @@ public class BookmarkController {
         restaurantService.addRestaurant(restaurant);
 
 
-        if(where.equals("index")){ //즐겨찾기 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
+        if (where.equals("index")) { //즐겨찾기 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
             return "redirect:/index";
-        }else if(where.equals("detail")){
+        } else if (where.equals("detail")) {
             return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantID;
-        }else if(where.equals("ranking")){
+        } else if (where.equals("ranking")) {
             return "redirect:/ranking";
-        }else if(where.equals("search")){
+        } else if (where.equals("search")) {
             return "redirect:/index";
-        }else if(where.equals("favorites")){
+        } else if (where.equals("favorites")) {
             return "redirect:/restaurant/favorites";
-        }else{
+        } else {
             return "redirect:/restaurant/restaurantAllPage";
         }
 

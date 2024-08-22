@@ -27,7 +27,7 @@ public class ReviewService {
     @Autowired
     RestaurantService restaurantService;
 
-    public void writeReview(Review review, MultipartFile file, String userId)  throws IOException{
+    public void writeReview(Review review, MultipartFile file, String userId) throws IOException {
 
 
         Integer restaurantId = review.getRestaurantId();
@@ -41,17 +41,16 @@ public class ReviewService {
         reviewRepository.save(review);
 
 
-
     }
 
     public String uploadFile(MultipartFile file, Integer id) throws IOException {
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\files"; //파일 경로
-        String fileName = "review_"+ id +"_" + file.getOriginalFilename();
+        String fileName = "review_" + id + "_" + file.getOriginalFilename();
         File saveFile = new File(projectPath, fileName);
 
         file.transferTo(saveFile); //파일 경로에 저장
 
-        return "\\img\\files\\"+fileName;
+        return "\\img\\files\\" + fileName;
 
     }
 
@@ -71,7 +70,7 @@ public class ReviewService {
         return postsPages;
     }
 
-    public void removeReview(Long reviewId){
+    public void removeReview(Long reviewId) {
         reviewRepository.deleteById(reviewId);
     }
 }

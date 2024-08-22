@@ -2,6 +2,7 @@ package com.restaurant.Restaurant_search.entity;
 
 import lombok.Data;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,7 +37,6 @@ public class Board {
     private Integer reports; // 신고하기 수, NULL 가능
 
 
-
     @Column(name = "photo_path", length = 255, nullable = true)
     private String photoPath; // 사진 경로
 
@@ -48,7 +48,6 @@ public class Board {
     protected void onCreate() {
         this.writeDate = LocalDateTime.now();
     }
-
 
 
     // 기본 생성자
@@ -105,13 +104,21 @@ public class Board {
         this.writeDate = writeDate;
     }
 
-    public Integer getReports() { return reports; }
+    public Integer getReports() {
+        return reports;
+    }
 
-    public void setReports(Integer reports) { this.reports = reports; }
+    public void setReports(Integer reports) {
+        this.reports = reports;
+    }
 
-    public Integer getBoardLikes() { return boardlikes; }
+    public Integer getBoardLikes() {
+        return boardlikes;
+    }
 
-    public void setBoardLikes(Integer boardlikes) { this.boardlikes = boardlikes; }
+    public void setBoardLikes(Integer boardlikes) {
+        this.boardlikes = boardlikes;
+    }
 
     public String getPhotoPath() {
         return photoPath;

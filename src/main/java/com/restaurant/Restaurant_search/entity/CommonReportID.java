@@ -45,6 +45,4 @@ public class CommonReportID implements Serializable {
     }
 
 
-
-
 }

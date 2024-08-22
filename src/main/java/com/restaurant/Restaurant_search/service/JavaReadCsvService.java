@@ -25,11 +25,11 @@ public class JavaReadCsvService { //공공데이터 포털에서 제공하는 �
             File file = new File(csvPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             String line;
-            while ((line = br.readLine())!=null) {
+            while ((line = br.readLine()) != null) {
                 List<String> aLine = new ArrayList<String>();
-                String[] lineArr = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
+                String[] lineArr = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                 aLine = Arrays.asList(lineArr);
-                restaurant = new Restaurant(lineArr[1],lineArr[6],lineArr[3],lineArr[7]);
+                restaurant = new Restaurant(lineArr[1], lineArr[6], lineArr[3], lineArr[7]);
                 csvRepository.save(restaurant);
             }
         } catch (Exception e) {

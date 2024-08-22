@@ -18,17 +18,16 @@ public class IndexController {
     RestaurantService restaurantService;
 
     @GetMapping(value = {"/", "/index"})
-    public String index(Model model){ // 평점을 기준으로 9개의 식당 정보를 갖고옴.
+    public String index(Model model) { // 평점을 기준으로 9개의 식당 정보를 갖고옴.
         List<Restaurant> restaurants = restaurantService.restaurantList();
         model.addAttribute("restaurant", restaurants);
         return "index";
     }
 
 
-
     @GetMapping("/recommendMenu")
-    public String recommendMenu(Model model){
-        String [] menu =  {
+    public String recommendMenu(Model model) {
+        String[] menu = {
                 "김치 찌개", "된장 찌개", "비빔밥", "불고기", "삼겹살",
                 "떡볶이", "김밥", "치킨", "갈비탕", "설렁탕",
                 "칼국수", "냉면", "제육 볶음", "감자탕", "부대 찌개",
@@ -37,7 +36,7 @@ public class IndexController {
                 "간장 게장", "탕후루", "핫도그", "피자", "해물탕"
         };
 
-        int idx = (int)(Math.random()*30);
+        int idx = (int) (Math.random() * 30);
 
         model.addAttribute("menu", menu[idx]);
 
@@ -46,7 +45,7 @@ public class IndexController {
     }
 
     @PostMapping("/search")
-    public String searRestaurant(HttpServletRequest req, Model model){
+    public String searRestaurant(HttpServletRequest req, Model model) {
         String searchName = req.getParameter("searchName");
         List<Restaurant> restaurants = restaurantService.searchRestaurants(searchName);
         model.addAttribute("restaurant", restaurants);

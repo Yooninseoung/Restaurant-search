@@ -34,7 +34,7 @@ public class RestaurantController {
     BookmarkService bookmarkService;
 
     @RequestMapping("/detailScreen") // 식당 세부 화면 조회
-    public String detail(HttpServletRequest req, Model model, @PageableDefault(page = 1) Pageable pageable){
+    public String detail(HttpServletRequest req, Model model, @PageableDefault(page = 1) Pageable pageable) {
         String restaurantId = req.getParameter("restaurantId"); //식당 id를 받아와 조회함
 
         Restaurant restaurant = restaurantService.findRestaurant(Long.parseLong(restaurantId));//특정 식당의 정보를 갖고옴
@@ -62,15 +62,14 @@ public class RestaurantController {
     }
 
 
-    @RequestMapping(value="/push/{where}/{btn}", method= RequestMethod.GET) //btn에 따른 좋아요, 싫어요 기능
+    @RequestMapping(value = "/push/{where}/{btn}", method = RequestMethod.GET) //btn에 따른 좋아요, 싫어요 기능
     public String pushButton(@PathVariable("where") String where,
                              @PathVariable("btn") String btn,
                              HttpServletRequest req, Model model,
-                             @SessionAttribute(name = "userId", required = false) String userId){
+                             @SessionAttribute(name = "userId", required = false) String userId) {
 
         Restaurant restaurant = null;
         Integer restaurantId = Integer.parseInt(req.getParameter("restaurantId")); //식당 id를 받아와 조회함
-
 
 
         CommonDataID commonDataID = new CommonDataID(userId, restaurantId); //좋아요, 싫어요 table의 기본키
@@ -78,44 +77,43 @@ public class RestaurantController {
         boolean flag;
 
 // 좋아요 혹은 싫어요 유무에 따라 ON/OFF 기능을 지원
-        if(btn.equals("like")){ //입력이 좋아요 버튼
+        if (btn.equals("like")) { //입력이 좋아요 버튼
             flag = likeService.existLikeData(restaurantId, userId); //좋아요 테이블에 데이터가 존재하는지 확인
             LikeData likeData = new LikeData(commonDataID); // entity객체
-            if(flag){ //true : 데이터가 있음 -> 데이터를 삭제
+            if (flag) { //true : 데이터가 있음 -> 데이터를 삭제
                 likeService.deleteLike(likeData);
-            }else {
+            } else {
                 likeService.addLike(likeData);
             }
-        }else{ //입력이 싫어요 버튼
+        } else { //입력이 싫어요 버튼
             flag = likeService.existUnlikeData(restaurantId, userId); //싫어요 테이블에 존재하는지 확인
             UnLikeData unlikeData = new UnLikeData(commonDataID);
-            if(flag){ //true : 데이터가 있음 -> 데이터를 삭제
+            if (flag) { //true : 데이터가 있음 -> 데이터를 삭제
                 likeService.deleteUnLike(unlikeData);
-            }else {
+            } else {
                 likeService.addUnLike(unlikeData);
             }
 
         }
 
-        if(where.equals("index")){ //좋아요 싫어요 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
+        if (where.equals("index")) { //좋아요 싫어요 버튼을 누를 수 있는 화면 3곳 : 각 요청한 곳으로 반환
             return "redirect:/index";
-        }else if(where.equals("detail")){
+        } else if (where.equals("detail")) {
             model.addAttribute("restaurant", restaurant);
             return "redirect:/restaurant/detailScreen?restaurantId=" + restaurantId;
-        }else if(where.equals("ranking")){
+        } else if (where.equals("ranking")) {
             return "redirect:/ranking";
-        }else if(where.equals("search")){
+        } else if (where.equals("search")) {
             return "redirect:/index";
-        }else{
+        } else {
             return "redirect:/restaurant/restaurantAllPage";
         }
-
 
 
     }
 
     @GetMapping("/restaurantAllPage")
-    public String showAllRestaurantPage(Model model, @PageableDefault(page = 1) Pageable pageable){
+    public String showAllRestaurantPage(Model model, @PageableDefault(page = 1) Pageable pageable) {
 
         Page<Restaurant> postsPages = restaurantService.paging(pageable);
         model.addAttribute("restaurant", postsPages);
@@ -131,7 +129,7 @@ public class RestaurantController {
 
     @GetMapping("/favorites")
     public String showFavorites(Model model,
-                                @SessionAttribute(name = "userId", required = true) String userId){
+                                @SessionAttribute(name = "userId", required = true) String userId) {
         List<Long> restaurantIds = bookmarkService.getRestaurantIdsByUserId(userId);
         List<Restaurant> restaurants = restaurantService.findByFavoriteRestaurants(restaurantIds);
         model.addAttribute("restaurants", restaurants);

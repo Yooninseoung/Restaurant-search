@@ -16,7 +16,6 @@ public class CommonBoardLikeID implements Serializable {
     private Integer boardId;
 
 
-
     // Constructors
     public CommonBoardLikeID() {
     }

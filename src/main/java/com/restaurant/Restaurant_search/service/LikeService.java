@@ -16,41 +16,41 @@ public class LikeService {
     @Autowired
     UnlikeRepository unlikeRepository;
 
-    public boolean existLikeData(Integer restaurantId, String userId){ // 좋아요가 존재한다면 true
+    public boolean existLikeData(Integer restaurantId, String userId) { // 좋아요가 존재한다면 true
         return likeRepository.existsByRestaurantIdAndUserId(restaurantId, userId);
     }
 
-    public boolean existUnlikeData(Integer restaurantId, String userId){ // 싫어요가 존재한다면 true
+    public boolean existUnlikeData(Integer restaurantId, String userId) { // 싫어요가 존재한다면 true
         return unlikeRepository.existsByRestaurantIdAndUserId(restaurantId, userId);
     }
 
 
-    public void addLike(LikeData likeData){ //좋아요 추가
+    public void addLike(LikeData likeData) { //좋아요 추가
         likeRepository.save(likeData);
 
     }
 
-    public void deleteLike(LikeData likeData){ // 좋아요 취소
+    public void deleteLike(LikeData likeData) { // 좋아요 취소
         likeRepository.delete(likeData);
 
     }
 
-    public int countLike(Integer restaurantId){ // 좋아요 수
+    public int countLike(Integer restaurantId) { // 좋아요 수
 
         return likeRepository.countByRestaurantId(restaurantId);
     }
 
-    public void addUnLike(UnLikeData unlikeData){ //싫어요 추가
+    public void addUnLike(UnLikeData unlikeData) { //싫어요 추가
         unlikeRepository.save(unlikeData);
 
     }
 
-    public void deleteUnLike(UnLikeData unlikeData){ // 싫어요 취소
+    public void deleteUnLike(UnLikeData unlikeData) { // 싫어요 취소
         unlikeRepository.delete(unlikeData);
 
     }
 
-    public int countUnLike(Integer restaurantId){ // 싫어요 수
+    public int countUnLike(Integer restaurantId) { // 싫어요 수
 
         return unlikeRepository.countByRestaurantId(restaurantId);
     }

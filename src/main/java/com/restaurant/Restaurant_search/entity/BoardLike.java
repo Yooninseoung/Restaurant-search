@@ -1,6 +1,7 @@
 package com.restaurant.Restaurant_search.entity;
 
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 @Entity
@@ -23,9 +24,13 @@ public class BoardLike {
         this.likes = likes;
     }
 
-    public CommonBoardLikeID getCommonBoardLikeID() { return commonBoardLikeID; }
+    public CommonBoardLikeID getCommonBoardLikeID() {
+        return commonBoardLikeID;
+    }
 
-    public void setCommonBoardLikeID(CommonBoardLikeID commonBoardLikeID) { this.commonBoardLikeID = commonBoardLikeID; }
+    public void setCommonBoardLikeID(CommonBoardLikeID commonBoardLikeID) {
+        this.commonBoardLikeID = commonBoardLikeID;
+    }
 
     public Integer getLikes() {
         return likes;

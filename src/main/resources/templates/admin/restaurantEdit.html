@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>식당 편집 화면</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 
     <style>
@@ -37,14 +38,18 @@
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a href="/index" class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
+                     viewBox="0 0 24 24">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
                 <strong>GangwonCook</strong>
             </a>
 
         </div>
     </div>
 </header>
-
 
 
 <div class="container" style="margin-top: 20px;">
@@ -54,39 +59,46 @@
 
                 <form method="post" action="/manage/restaurantModify" enctype="multipart/form-data">
                     <input type="hidden" name="restaurantId" th:value="${restaurant.restaurantID}">
-                <p class="display-4 fst-italic">식당 이름 : <input type="text" class="form-control"  name="restaurantName" th:value="${restaurant.restaurantName}"></p>
+                    <p class="display-4 fst-italic">식당 이름 : <input type="text" class="form-control"
+                                                                   name="restaurantName"
+                                                                   th:value="${restaurant.restaurantName}"></p>
 
-                <p class="lead my-3">메뉴 : <input type="text" class="form-control" name="menu" th:value="${restaurant.menu}"> </p>
+                    <p class="lead my-3">메뉴 : <input type="text" class="form-control" name="menu"
+                                                     th:value="${restaurant.menu}"></p>
 
-                <p class="lead my-3">주소 : <input type="text" class="form-control" name="address" th:value="${restaurant.address}"> </p>
+                    <p class="lead my-3">주소 : <input type="text" class="form-control" name="address"
+                                                     th:value="${restaurant.address}"></p>
 
-                <p class="lead my-3">전화번호 : <input type="text" class="form-control" name="phoneNumber" th:value="${restaurant.phoneNumber}"> </p>
+                    <p class="lead my-3">전화번호 : <input type="text" class="form-control" name="phoneNumber"
+                                                       th:value="${restaurant.phoneNumber}"></p>
 
-                <p class="lead my-3">평점 : <span th:text="${restaurant.rating}">4.5</span> </p>
+                    <p class="lead my-3">평점 : <span th:text="${restaurant.rating}">4.5</span></p>
 
                     <div class="input-group mb-3">
                         <input type="file" name="file">
                     </div>
 
-                <button type="submit" class="btn btn-primary">
-                    수정
-                </button>
-
-                    <button type="button" class="btn btn-primary"
-                            th:onclick="|location.href='@{/manage/deleteRestaurant(restaurantId=${restaurant.restaurantID})}'|">삭제
+                    <button type="submit" class="btn btn-primary">
+                        수정
                     </button>
 
+                    <button type="button" class="btn btn-primary"
+                            th:onclick="|location.href='@{/manage/deleteRestaurant(restaurantId=${restaurant.restaurantID})}'|">
+                        삭제
+                    </button>
 
 
                 </form>
 
 
-        </div>
+            </div>
 
             <div th:if="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350"></div>
+                <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350">
+            </div>
             <div th:unless="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" th:src="${restaurant.photoPath}" alt="맛집" width="450" height="350"></div>
+                <img class="bd-placeholder-img" th:src="${restaurant.photoPath}" alt="맛집" width="450" height="350">
+            </div>
 
         </div>
     </div>
@@ -106,11 +118,11 @@
     </thead>
     <tbody>
     <!-- 세분화 필요-->
-    <div th:each="item:${review}" >
+    <div th:each="item:${review}">
         <tr>
             <td th:text="${item.OneLineReview}">맛있음</td>
             <td th:text="${item.rating}">5.0</td>
-            <td><img th:src="@{${item.photo_path}}" width="100" height="100" /></td>
+            <td><img th:src="@{${item.photo_path}}" width="100" height="100"/></td>
             <td>
                 <button type="button" class="btn btn-primary"
                         th:onclick="|location.href='@{/manage/deleteReview(reviewId=${item.reviewID})}'|">삭제
@@ -125,22 +137,25 @@
 
 <div class="d-flex justify-content-center mt-2 my-3">
     <!-- 첫 페이지 버튼 -->
-    <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=1)}" class="btn btn-outline-secondary"> < </a>
+    <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=1)}"
+       class="btn btn-outline-secondary"> < </a>
 
     <!-- 페이지 번호 버튼 그룹 -->
     <div class="btn-group me-2 mx-2" role="group" aria-label="Page navigation">
         <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-            <button type="button" class="btn btn-outline-secondary mx-1" th:if="${page == review.number + 1}" th:text="${page}" disabled></button>
+            <button type="button" class="btn btn-outline-secondary mx-1" th:if="${page == review.number + 1}"
+                    th:text="${page}" disabled></button>
             <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=${page})}">
-                <button type="button" class="btn btn-outline-secondary mx-1" th:unless="${page == review.number + 1}" th:text="${page}"></button>
+                <button type="button" class="btn btn-outline-secondary mx-1" th:unless="${page == review.number + 1}"
+                        th:text="${page}"></button>
             </a>
         </span>
     </div>
 
     <!-- 마지막 페이지 버튼 -->
-    <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}" class="btn btn-outline-secondary"> > </a>
+    <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
+       class="btn btn-outline-secondary"> > </a>
 </div>
-
 
 
 <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
@@ -150,7 +165,9 @@
     </p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

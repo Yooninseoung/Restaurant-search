@@ -11,21 +11,21 @@ public class ReportService {
     @Autowired
     ReportRepository reportRepository;
 
-    public void addReport(Report report){
+    public void addReport(Report report) {
         reportRepository.save(report);
 
     }
 
-    public void deleteReport(Report report){
+    public void deleteReport(Report report) {
         reportRepository.delete(report);
 
     }
 
-    public boolean existReport(Report report){ // 북마크가 존재한다면 true
+    public boolean existReport(Report report) { // 북마크가 존재한다면 true
         return reportRepository.existsByBoardIdAndUserId(report.getCommonReportID().getBoardId(), report.getCommonReportID().getUserID());
     }
 
-    public int countReport(Integer boardId){
+    public int countReport(Integer boardId) {
         return reportRepository.countByBoardID(boardId);
     }
 }

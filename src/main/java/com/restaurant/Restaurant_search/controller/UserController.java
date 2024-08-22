@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "login/login";
     }
 
@@ -38,12 +38,11 @@ public class UserController {
             session.setAttribute("userId", userId);
             session.setAttribute("username", user.getUsername()); // username을 세션에 저장
             session.setMaxInactiveInterval(1800);// Session의 유효 시간 설정 (1800초 = 30분)
-            if(userId.equals("admin")){
+            if (userId.equals("admin")) {
                 return "redirect:/manage/adminPage";
             }
             return "redirect:/index"; // 로그인 성공 시 index.html 페이지로 이동
-        }
-        else {
+        } else {
 
             return "login/login"; // 로그인 실패 시 다시 login.html 페이지로 이동
         }
@@ -51,7 +50,7 @@ public class UserController {
 
 
     @GetMapping("/signUp")
-    public String signupPage(){
+    public String signupPage() {
         return "login/signup";
     }
 
@@ -62,16 +61,16 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest req){
+    public String logout(HttpServletRequest req) {
         HttpSession session = req.getSession(false);  // Session이 없으면 null return
-        if(session != null) {
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/index";
     }
 
     @GetMapping("/searchUser") //userId로 user를 받아옴(관리자 .. 유져 검색 기능)
-    public String searchUser(HttpServletRequest req, Model model){
+    public String searchUser(HttpServletRequest req, Model model) {
         String searchId = req.getParameter("searchId");
         List<User> user = userService.searchUser(searchId);
         model.addAttribute("users", user);
@@ -81,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping("/selectUser") //관리자 유져 리스트에서 특정 유저를 선택
-    public String selectUser(HttpServletRequest req, Model model){
+    public String selectUser(HttpServletRequest req, Model model) {
         String userId = req.getParameter("userId");
         User user = userService.findByUserId(userId);
 
@@ -91,7 +90,7 @@ public class UserController {
 
 
     @GetMapping("/deleteUser")
-    public String deleteUser(HttpServletRequest req){
+    public String deleteUser(HttpServletRequest req) {
         String userId = req.getParameter("userId");
         userService.deleteUserById(userId);
 

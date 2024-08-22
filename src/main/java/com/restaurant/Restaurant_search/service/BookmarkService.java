@@ -12,21 +12,21 @@ public class BookmarkService {
     @Autowired
     BookmarkRepository bookmarkRepository;
 
-    public void addBookmark(Bookmark bookmark){
+    public void addBookmark(Bookmark bookmark) {
         bookmarkRepository.save(bookmark);
 
     }
 
-    public void deleteBookmark(Bookmark bookmark){
+    public void deleteBookmark(Bookmark bookmark) {
         bookmarkRepository.delete(bookmark);
 
     }
 
-    public boolean existBookmrk(Integer restaurantId, String userId){ // 북마크가 존재한다면 true
+    public boolean existBookmrk(Integer restaurantId, String userId) { // 북마크가 존재한다면 true
         return bookmarkRepository.existsByRestaurantIdAndUserId(restaurantId, userId);
     }
 
-    public int countBookmark(Integer restaurantId){
+    public int countBookmark(Integer restaurantId) {
         return bookmarkRepository.countByRestaurantId(restaurantId);
     }
 

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>자유 게시판</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .text-and-image {
             display: flex;
@@ -91,7 +92,9 @@
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a href="/index" class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
+                     viewBox="0 0 24 24">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                     <circle cx="12" cy="13" r="4"/>
                 </svg>
@@ -101,11 +104,16 @@
             <div class="text-end">
                 <div th:if="${session.userId != null}">
                     <span style="color:white;">환영합니다! <span th:text="${session.userId}"></span>님</span>
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/logout'">Logout</button>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/logout'">
+                        Logout
+                    </button>
                 </div>
                 <div th:unless="${session.userId != null}">
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/login'">Login</button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/user/signUp'">Sign-up</button>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/login'">
+                        Login
+                    </button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/user/signUp'">Sign-up
+                    </button>
                 </div>
             </div>
         </div>
@@ -134,7 +142,8 @@
         </thead>
         <tbody>
         <!-- 게시글 목록 반복 -->
-        <tr th:each="item : ${boards}" class="clickable-row" th:onclick="|window.location.href='/board/detail/' + ${item.boardId}|">
+        <tr th:each="item : ${boards}" class="clickable-row"
+            th:onclick="|window.location.href='/board/detail/' + ${item.boardId}|">
             <td th:text="${item.boardId}"></td>
             <td th:text="${item.title}"></td>
             <td th:text="${item.username}"></td>
@@ -146,7 +155,7 @@
 
     <div class="d-flex justify-content-center mt-2 my-3">
         <!-- 첫 페이지 버튼 -->
-        <a th:href="@{/board?page=0}" class="btn btn-outline-secondary" > << </a>
+        <a th:href="@{/board?page=0}" class="btn btn-outline-secondary"> << </a>
 
 
         <!-- 페이지 번호 버튼 그룹 -->
@@ -154,10 +163,12 @@
     <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
         <!-- 페이지 번호가 현재 페이지가 아닐 경우 -->
         <a th:href="@{/board?page={page}(page=${page - 1})}">
-            <button type="button" class="btn btn-outline-secondary mx-1" th:text="${page}" th:if="${page != currentPage}"></button>
+            <button type="button" class="btn btn-outline-secondary mx-1" th:text="${page}"
+                    th:if="${page != currentPage}"></button>
         </a>
         <!-- 페이지 번호가 현재 페이지일 경우 -->
-        <button type="button" class="btn btn-outline-secondary mx-1" th:text="${page}" th:if="${page == currentPage}" disabled></button>
+        <button type="button" class="btn btn-outline-secondary mx-1" th:text="${page}" th:if="${page == currentPage}"
+                disabled></button>
     </span>
         </div>
 
@@ -170,8 +181,9 @@
 </div>
 
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
