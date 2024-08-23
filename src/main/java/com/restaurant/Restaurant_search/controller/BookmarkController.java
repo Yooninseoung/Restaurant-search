@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import java.awt.print.Book;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
+//식당 북마크 기능
 @Controller
 public class BookmarkController {
     @Autowired

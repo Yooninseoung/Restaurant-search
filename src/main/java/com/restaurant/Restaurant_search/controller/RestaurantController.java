@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+// 식당 관련 메인 기능
 @RequestMapping("/restaurant")
 @Controller
 public class RestaurantController {

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+//자유 게시판 관련 댓글 기능
 @Controller
 @RequestMapping("/comments")
 public class CommentController {

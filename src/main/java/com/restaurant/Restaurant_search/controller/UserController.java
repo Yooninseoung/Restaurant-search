@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+//회원 관리 기능
+
 @RequestMapping("/user")
 @Controller
 public class UserController {

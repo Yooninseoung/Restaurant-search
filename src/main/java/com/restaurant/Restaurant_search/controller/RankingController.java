@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+//식당 인기순 정렬 관련 기능
 @Controller
 public class RankingController {
     @Autowired

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+//자유 게시판 관련 기능을 처리
 @Controller
 @RequestMapping("/board")
 public class BoardController {

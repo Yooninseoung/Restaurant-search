@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+// 식당의 사용자 리뷰를 관리하는 컨트롤러
+
 @Controller
 @RequestMapping("/review")
 public class ReviewController {

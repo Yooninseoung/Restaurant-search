@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-
+//메인 홈페이지 관련 기능
 @Controller
 public class IndexController {
     @Autowired
