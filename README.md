@@ -1,12 +1,12 @@
 ## 원주 지역 "식당 검색"
 ![image](https://github.com/user-attachments/assets/a6e45b71-b216-4fab-8f84-b6f1030b6c51)
 
-
 **목차**
 > 1. 프로젝트 소개
 > 2. 기술 스택
 > 3. 조원 & 역할 분담
 > 4. 구현 기능
+> 5. ERD
 
 
 
@@ -23,13 +23,13 @@
 ### 2. 기술 스택
 #### - 개발 언어 & 관련 기술 & 개발 도구
  - Java
+- Spring boot
+ - jquery
  - HTML
  - CSS
  - Javascript
  - JPA
  - BootStrap
- - Spring boot
- - jquery
  - MySQL
  - IntelliJ
 
@@ -43,6 +43,7 @@
 |--|--|
 |김민수|자유 게시판 데이터베이스 설계, 자유게시판 기능 제작, 뷰 화면 제작|
 
+
 ### 4. 구현 기능
 **1. 회원 관련 기능**  
 로그인, 회원가입  
@@ -55,3 +56,16 @@
 
 **4. 관리자 기능**  
 회원 관리(검색, 삭제) 기능, 식당 관리(추가, 수정, 삭제) 기능, 자유 게시판(삭제) 관리 기능
+<br/><br/><br/><br/>
+
+
+
+### 5. ERD ###
+
+<img src="https://github.com/user-attachments/assets/86517f66-692f-4c6b-8d95-01cb42ca8802"  width="900" height="600"/>
+
+
+
+
+
+
