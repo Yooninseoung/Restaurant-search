@@ -7,6 +7,7 @@
 > 3. 조원 & 역할 분담
 > 4. 구현 기능
 > 5. ERD
+> 6. 시연 영상상
 
 
 
@@ -64,6 +65,9 @@
 
 <img src="https://github.com/user-attachments/assets/86517f66-692f-4c6b-8d95-01cb42ca8802"  width="900" height="600"/>
 
+
+### 6. 시연 영상 ###
+네이버 블로그 링크 : https://blog.naver.com/welcometomysite/223567360588
 
 
 
