@@ -6,11 +6,14 @@ import com.restaurant.Restaurant_search.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequestMapping("/user")
@@ -60,6 +63,16 @@ public class UserController {
         return "redirect:/index";
     }
 
+    @GetMapping("/checkDuplicateID")
+    public ResponseEntity<Map<String, Boolean>> checkDuplicateID(HttpServletRequest req) {
+        String newId = req.getParameter("userID");
+        boolean isDuplicate = userService.findByUserId(newId) != null;
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isDuplicate", isDuplicate);
+
+        return ResponseEntity.ok(response);
+    }
     @GetMapping("/logout")
     public String logout(HttpServletRequest req) {
         HttpSession session = req.getSession(false);  // Session이 없으면 null return
@@ -102,6 +115,7 @@ public class UserController {
         userService.insert(user);
         return "admin/adminPage";
     }
+
 
 
 }
