@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +69,7 @@ public class BoardService {
 
     // 파일을 업로드하는 메소드
     public String uploadFile(MultipartFile file, Integer boardId) throws IOException {
-        String projectPath = "src/main/resources/static/img/boardImg"; // 파일 저장 경로
+        String projectPath = "C:/GangwonCookImg/BoardImg";
         File directory = new File(projectPath);
 
         // 디렉토리가 존재하지 않으면 생성
@@ -75,26 +77,24 @@ public class BoardService {
             directory.mkdirs();
         }
 
-        // 안전한 파일 이름 생성
-        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileName = "board_" + boardId + "_" + originalFileName;
-
-        File saveFile = new File(directory, fileName);
-
-        // 기존 파일이 있으면 삭제
-        if (saveFile.exists()) {
-            saveFile.delete();
-        }
+        String fileName = "board_" + boardId + "_" + getDate() +"_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath, fileName);
 
         // 파일 저장
-        Files.copy(file.getInputStream(), saveFile.toPath());
+        file.transferTo(saveFile);
 
-        return "/img/boardImg/" + fileName; // 저장된 파일의 상대 경로 반환
+        return fileName;
     }
 
 
     public void deleteBoard(Integer boardId) {
         boardRepository.deleteById(boardId);
+    }
+
+    private String getDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateTime = sdf.format(new Date());
+        return currentDateTime;
     }
 
 

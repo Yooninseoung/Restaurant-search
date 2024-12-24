@@ -288,7 +288,7 @@
     </div>
 
     <div>
-        <img th:src="@{${board.photoPath}}" alt="" class="img-fluid">
+        <img th:src="@{/board/BoardImg/{fileName}(fileName=${board.photoPath})}" width="300" height="300"/>
     </div>
     <div th:if="${board == null}">
         <p>게시글을 찾을 수 없습니다.</p>
