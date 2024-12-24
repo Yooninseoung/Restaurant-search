@@ -4,6 +4,7 @@ import com.restaurant.Restaurant_search.entity.Review;
 import com.restaurant.Restaurant_search.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -43,17 +48,25 @@ public class ReviewService {
 
     }
 
+
     public String uploadFile(MultipartFile file, Integer id) throws IOException {
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\files"; //파일 경로
-        String fileName = "review_" + id + "_" + file.getOriginalFilename();
+        String projectPath = "C:/GangwonCookImg/ReviewImg";
+        File dir = new File(projectPath);
+
+        // 디렉토리가 존재하지 않으면 생성
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        // 파일 이름 설정
+        String fileName = "rest_" + id + "_" + getDate() +"_" + file.getOriginalFilename();
         File saveFile = new File(projectPath, fileName);
 
-        file.transferTo(saveFile); //파일 경로에 저장
+        // 파일 저장
+        file.transferTo(saveFile);
 
-        return "\\img\\files\\" + fileName;
-
+        return fileName;
     }
-
 
     public List<Review> getReviewsByRestaurantId(int restaurantId) {
         return reviewRepository.findByRestaurantId(restaurantId);
@@ -72,5 +85,11 @@ public class ReviewService {
 
     public void removeReview(Long reviewId) {
         reviewRepository.deleteById(reviewId);
+    }
+
+    private String getDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateTime = sdf.format(new Date());
+        return currentDateTime;
     }
 }
