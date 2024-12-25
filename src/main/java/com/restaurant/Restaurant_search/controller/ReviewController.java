@@ -23,7 +23,11 @@ public class ReviewController {
     ReviewService reviewService;
 
     @GetMapping("/writeForm") //리뷰 작성 화면 반환
-    public String writeForm(HttpServletRequest req, Model model) {
+    public String writeForm(HttpServletRequest req, Model model,
+                            @SessionAttribute(name = "userId", required = false) String userId) throws IOException {
+        if(userId==null){
+            return "redirect:/user/login";
+        }
         model.addAttribute("restaurantId", req.getParameter("restaurantId"));
         return "restaurant/restaurantReviewWrite";
     }

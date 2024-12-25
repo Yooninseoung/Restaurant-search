@@ -50,7 +50,10 @@ public class BoardService {
     // 게시글 저장 및 파일 업로드 메소드
     public void writeBoard(Board board, MultipartFile file, String username) throws IOException {
         Integer boardId = board.getBoardId(); // 게시글 ID 가져오기
-        String photoPath = uploadFile(file, boardId); // 파일 업로드 경로
+        String photoPath = null;
+        if(!file.isEmpty()) {
+            photoPath = uploadFile(file, boardId); // 파일 업로드 경로
+        }
 
         board.setPhotoPath(photoPath); // 게시글에 파일 경로 설정
         board.setUsername(username); // 작성자 설정

@@ -88,7 +88,10 @@ public class BoardController {
 
     // 게시글 작성 페이지를 보여주는 메소드
     @GetMapping("write")
-    public String showFreeBoardWritePage() {
+    public String showFreeBoardWritePage(@SessionAttribute(name = "userId", required = false) String userId) throws IOException {
+        if(userId==null){
+            return "redirect:/user/login";
+        }
         return "board/freeBoardWrite"; // "board/freeBoardWrite.html"을 반환
     }
 
@@ -99,9 +102,6 @@ public class BoardController {
                             HttpSession session) throws IOException {
         // 세션에서 username 가져오기
         String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login"; // 로그인 페이지로 리다이렉트
-        }
         board.setUsername(username); // 세션에서 username을 가져와서 설정
 
         boardService.writeBoard(board, file, username); // 게시글과 파일을 저장

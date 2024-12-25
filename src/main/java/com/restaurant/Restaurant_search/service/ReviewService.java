@@ -36,7 +36,11 @@ public class ReviewService {
 
 
         Integer restaurantId = review.getRestaurantId();
-        String photo_path = uploadFile(file, restaurantId); //파일 업로드 경로
+        String photo_path = null;
+
+        if(!file.isEmpty()) {
+            photo_path = uploadFile(file, restaurantId); //파일 업로드 경로
+        }
 
         review.setPhoto_path(photo_path);
         review.setUserID(userId);

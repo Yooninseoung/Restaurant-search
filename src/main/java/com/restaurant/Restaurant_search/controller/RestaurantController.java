@@ -108,6 +108,10 @@ public class RestaurantController {
                              HttpServletRequest req, Model model,
                              @SessionAttribute(name = "userId", required = false) String userId) {
 
+        if(userId==null){
+            return "redirect:/user/login";
+        }
+
         Restaurant restaurant = null;
         Integer restaurantId = Integer.parseInt(req.getParameter("restaurantId")); //식당 id를 받아와 조회함
 

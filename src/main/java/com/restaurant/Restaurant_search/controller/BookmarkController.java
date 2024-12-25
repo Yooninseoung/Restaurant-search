@@ -32,6 +32,10 @@ public class BookmarkController {
                            @PathVariable("where") String where,
                            @SessionAttribute(name = "userId", required = false) String userId) throws UnsupportedEncodingException {
 
+        if(userId==null){
+            return "redirect:/user/login";
+        }
+
         Integer restaurantID = Integer.parseInt(req.getParameter("restaurantId"));
 
 

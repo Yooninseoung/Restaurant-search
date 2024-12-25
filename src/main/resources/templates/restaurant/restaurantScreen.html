@@ -126,7 +126,9 @@
         <tr>
             <td th:text="${item.OneLineReview}">맛있음</td>
             <td th:text="${item.rating}">5.0</td>
-            <td><img th:src="@{/review/ReviewImg/{fileName}(fileName=${item.photo_path})}" width="100" height="100"/></td>
+            <td><div th:if="${item.photo_path != null}">
+            <img th:src="@{/review/ReviewImg/{fileName}(fileName=${item.photo_path})}" width="100" height="100"/>
+            </div></td>
 
         </tr>
     </div>
