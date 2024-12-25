@@ -7,14 +7,19 @@ import com.restaurant.Restaurant_search.service.RestaurantService;
 import com.restaurant.Restaurant_search.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -59,6 +64,41 @@ public class RestaurantController {
 
         return "restaurant/restaurantScreen";
 
+    }
+
+    @GetMapping("/RestaurantImg/{fileName}") //식당 사진을 반환
+    public ResponseEntity<Resource> getRestaurantImg(@PathVariable("fileName") String fileName) {
+        // 실제 파일 경로 설정
+        File file = new File("C:/GangwonCookImg/RestaurantImg/" + fileName);
+
+        // 파일이 존재하는지 확인
+        if (fileName.isEmpty()) {
+            file = new File("C:/GangwonCookImg/RestaurantImg/restaurantDefaultImage.jpg");
+        }
+
+
+        // 파일을 리소스로 변환
+        Resource resource = new FileSystemResource(file);
+
+        // 이미지 파일을 클라이언트로 반환
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + fileName)
+                .body(resource);
+    }
+
+    // 파일명이 없는 식당 사진 요청
+    @GetMapping("/RestaurantImg/")
+    public ResponseEntity<Resource> getDefaultRestaurantImg() {
+        // 기본 이미지 파일 설정
+        File file = new File("C:/GangwonCookImg/RestaurantImg/restaurantDefaultImage.jpg");
+
+        // 파일을 리소스로 변환
+        Resource resource = new FileSystemResource(file);
+
+        // 이미지 파일을 클라이언트로 반환
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=default.jpg")
+                .body(resource);
     }
 
 

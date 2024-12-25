@@ -14,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,15 +83,30 @@ public class RestaurantService {
     }
 
     public String uploadFile(MultipartFile file, Integer restaurantId) throws IOException {
-        String restaurantPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\restaurantImg"; //파일 경로
-        String fileName = "restaurant_" + restaurantId + "_" + file.getOriginalFilename();
-        File saveFile = new File(restaurantPath, fileName);
+        String projectPath = "C:/GangwonCookImg/RestaurantImg";
+        File dir = new File(projectPath);
 
-        file.transferTo(saveFile); //파일 경로에 저장
+        // 디렉토리가 존재하지 않으면 생성
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
 
-        return "\\img\\restaurantImg\\" + fileName;
+        // 파일 이름 설정
+        String fileName = "rest_" + restaurantId + "_" + getDate() +"_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath, fileName);
 
+        // 파일 저장
+        file.transferTo(saveFile);
+
+        return fileName;
     }
+
+    private String getDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateTime = sdf.format(new Date());
+        return currentDateTime;
+    }
+
 
     public void modifyRestaurant(Restaurant restaurant, MultipartFile file) throws IOException { //식당 수정
         if (!file.isEmpty()) {

@@ -96,12 +96,10 @@
                 </button>
             </div>
 
-            <div th:if="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350">
-            </div>
-            <div th:unless="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" th:src="${restaurant.photoPath}" alt="맛집" width="450" height="350">
-            </div>
+            <img class="bd-placeholder-img" width="600" height="500"
+                 th:src="@{/restaurant/RestaurantImg/{fileName}(fileName=${restaurant.photoPath})}"
+                 alt="맛집 이미지" />
+
         </div>
     </div>
 </div>
