@@ -102,19 +102,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/deleteUser")
-    public String deleteUser(HttpServletRequest req) {
-        String userId = req.getParameter("userId");
-        userService.deleteUserById(userId);
-
-        return "admin/adminPage";
-    }
-
-    @PostMapping("/updateUser") //회원 정보 수정
-    public String updateUser(User user) {
-        userService.insert(user);
-        return "admin/adminPage";
-    }
 
 
 

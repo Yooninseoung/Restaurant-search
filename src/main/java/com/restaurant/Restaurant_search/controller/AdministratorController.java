@@ -1,9 +1,6 @@
 package com.restaurant.Restaurant_search.controller;
 
-import com.restaurant.Restaurant_search.entity.Board;
-import com.restaurant.Restaurant_search.entity.Comment;
-import com.restaurant.Restaurant_search.entity.Restaurant;
-import com.restaurant.Restaurant_search.entity.Review;
+import com.restaurant.Restaurant_search.entity.*;
 import com.restaurant.Restaurant_search.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,9 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/manage")
 public class AdministratorController {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     RestaurantService restaurantService;
@@ -60,6 +60,20 @@ public class AdministratorController {
     public String manageUser() {
 
         return "admin/userManagePage";
+    }
+
+    @GetMapping("/deleteUser")
+    public String deleteUser(HttpServletRequest req) {
+        String userId = req.getParameter("userId");
+        userService.deleteUserById(userId);
+
+        return "admin/adminPage";
+    }
+
+    @PostMapping("/updateUser") //회원 정보 수정
+    public String updateUser(User user) {
+        userService.insert(user);
+        return "admin/adminPage";
     }
 
     @GetMapping("/restaurant")

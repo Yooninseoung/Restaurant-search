@@ -288,7 +288,7 @@
     </div>
 
     <div th:if="${board.photoPath != null}">
-        <img th:src="@{/board/BoardImg/{fileName}(fileName=${photoPath})}" width="300" height="300"/>
+        <img th:src="@{/board/BoardImg/{fileName}(fileName=${board.photoPath})}" width="300" height="300"/>
     </div>
 
     <div th:if="${board == null}">

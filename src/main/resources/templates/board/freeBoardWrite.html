@@ -182,7 +182,8 @@
 
             <div class="form-group">
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" name="file">
+                    <input type="file" id="fileInput" name="file">
+                    <small id="fileWarning" style="color: red; display: none;">한글 파일 이름은 사용할 수 없습니다.</small>
                 </div>
             </div>
 
@@ -207,4 +208,26 @@
         crossorigin="anonymous"></script>
 
 </body>
+<script>
+
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+        // 업로드된 파일 가져오기
+        const file = event.target.files[0];
+        if (file) {
+            const fileName = file.name;
+
+            // 한글 포함 여부 확인 (정규 표현식 사용)
+            const containsKorean = /[가-힣]/.test(fileName);
+
+            // 경고 표시 및 처리
+            const warning = document.getElementById("fileWarning");
+            if (containsKorean) {
+                warning.style.display = "block"; // 경고 메시지 표시
+                event.target.value = ""; // 파일 입력 초기화
+            } else {
+                warning.style.display = "none"; // 경고 메시지 숨김
+            }
+        }
+    });
+</script>
 </html>
