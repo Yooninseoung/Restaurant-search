@@ -96,9 +96,9 @@
                 </button>
             </div>
 
-            <img class="bd-placeholder-img" width="600" height="500"
+            <img class="bd-placeholder-img"
                  th:src="@{/restaurant/RestaurantImg/{fileName}(fileName=${restaurant.photoPath})}"
-                 alt="맛집 이미지" />
+                 alt="맛집 이미지" style="max-width: 50%; height: 40%;"/>
 
         </div>
     </div>
@@ -143,6 +143,8 @@
 
     <!-- 페이지 번호 버튼 그룹 -->
     <div class="btn-group me-2 mx-2" role="group" aria-label="Page navigation">
+        <!-- 페이지 번호가 존재할 때만 출력하도록 조건 추가 -->
+        <span th:if="${startPage != null and endPage != null and startPage <= endPage}">
         <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
             <button type="button" class="btn btn-outline-secondary mx-1" th:if="${page == review.number + 1}"
                     th:text="${page}" disabled></button>
@@ -150,12 +152,22 @@
                 <button type="button" class="btn btn-outline-secondary mx-1" th:unless="${page == review.number + 1}"
                         th:text="${page}"></button>
             </a>
+
+            <!-- 마지막 페이지 버튼 -->
+        <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
+                    class="btn btn-outline-secondary"> > </a>
+
         </span>
+    </span>
+        <!-- 페이지 번호가 없을 경우 1번 페이지를 기본으로 표시 -->
+        <span th:if="${startPage == null or endPage == null or startPage > endPage}">
+        <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=1)}">
+            <button type="button" class="btn btn-outline-secondary mx-1" th:text="1"></button>
+        </a>
+    </span>
     </div>
 
-    <!-- 마지막 페이지 버튼 -->
-    <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
-       class="btn btn-outline-secondary"> > </a>
+
 </div>
 
 
