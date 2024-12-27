@@ -261,30 +261,29 @@
         <a href="/board" class="btn btn-outline-secondary">목록으로 돌아가기</a>
     </div>
 
-    <hr class="divider">
-
 
     <table class="table table-section">
         <tbody>
         <tr>
-            <td class="author-label">작성자</td>
-            <td class="author-value" th:text="${board.username}">작성자</td>
-            <td class="date-label text-end">작성일</td>
-            <td class="date-value text-end" th:text="${#temporals.format(board.writeDate, 'yyyy.MM.dd')}">작성일</td>
+            <td><b>제목</b></td>
+            <td><b>작성자</b></td>
+            <td><b>작성일</b></td>
+
         </tr>
         <tr>
-            <td class="title-label">제목</td>
-            <td class="board-title" colspan="3" th:text="${board.title}">제목</td>
+            <td th:text="${board.title}">제목</td>
+            <td th:text="${board.username}">작성자</td>
+            <td th:text="${#temporals.format(board.writeDate, 'yyyy.MM.dd')}">작성일</td>
+
         </tr>
 
         </tbody>
     </table>
 
-    <hr class="divider">
     <br>
     <div class="content-section">
         <h4>내용</h4>
-        <div class="content-value" th:text="${board.content}">내용</div>
+        <div class="content-value" th:text="${board.content}" style="min-height: 300px; overflow: auto;">내용</div>
     </div>
 
     <div th:if="${board.photoPath != null}">
