@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form class="row g-3" method="post" action="/user/updateUser">
+<form class="row g-3" method="post" action="/manage/updateUser">
     <h1 align="center">회원 정보 수정</h1>
     <div class="col-md-6">
         <label for="uId" class="form-label">아이디</label>
@@ -36,7 +36,7 @@
 
     <div class="col-12" align="center">
         <button type="submit">수정</button>
-        <button type="button" th:onclick="|location.href='@{/user/deleteUser(userId=${user.userID})}'|">삭제</button>
+        <button type="button" th:onclick="|location.href='@{/manage/deleteUser(userId=${user.userID})}'|">삭제</button>
     </div>
 </form>
 

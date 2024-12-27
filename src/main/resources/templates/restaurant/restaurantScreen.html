@@ -96,12 +96,10 @@
                 </button>
             </div>
 
-            <div th:if="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350">
-            </div>
-            <div th:unless="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" th:src="${restaurant.photoPath}" alt="맛집" width="450" height="350">
-            </div>
+            <img class="bd-placeholder-img"
+                 th:src="@{/restaurant/RestaurantImg/{fileName}(fileName=${restaurant.photoPath})}"
+                 alt="맛집 이미지" style="max-width: 50%; height: 40%;"/>
+
         </div>
     </div>
 </div>
@@ -128,7 +126,9 @@
         <tr>
             <td th:text="${item.OneLineReview}">맛있음</td>
             <td th:text="${item.rating}">5.0</td>
-            <td><img th:src="@{${item.photo_path}}" width="100" height="100"/></td>
+            <td><div th:if="${item.photo_path != null}">
+            <img th:src="@{/review/ReviewImg/{fileName}(fileName=${item.photo_path})}" width="100" height="100"/>
+            </div></td>
 
         </tr>
     </div>
@@ -143,6 +143,8 @@
 
     <!-- 페이지 번호 버튼 그룹 -->
     <div class="btn-group me-2 mx-2" role="group" aria-label="Page navigation">
+        <!-- 페이지 번호가 존재할 때만 출력하도록 조건 추가 -->
+        <span th:if="${startPage != null and endPage != null and startPage <= endPage}">
         <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
             <button type="button" class="btn btn-outline-secondary mx-1" th:if="${page == review.number + 1}"
                     th:text="${page}" disabled></button>
@@ -150,17 +152,28 @@
                 <button type="button" class="btn btn-outline-secondary mx-1" th:unless="${page == review.number + 1}"
                         th:text="${page}"></button>
             </a>
+
+            <!-- 마지막 페이지 버튼 -->
+        <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
+                    class="btn btn-outline-secondary"> > </a>
+
         </span>
+    </span>
+        <!-- 페이지 번호가 없을 경우 1번 페이지를 기본으로 표시 -->
+        <span th:if="${startPage == null or endPage == null or startPage > endPage}">
+        <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=1)}">
+            <button type="button" class="btn btn-outline-secondary mx-1" th:text="1"></button>
+        </a>
+    </span>
     </div>
 
-    <!-- 마지막 페이지 버튼 -->
-    <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
-       class="btn btn-outline-secondary"> > </a>
+
 </div>
 
 
-<footer class="py-5 text-center text-body-secondary bg-body-tertiary">
-    <p>테스트 중..</p>
+<footer style="background-color: #f8f9fa; padding: 20px; text-align: center; position: relative; transform: translateY(0%);">
+    <p>식당 등록과 문의사항 : isyoon2000@naver.com</p>
+    <p>백엔드 개발자 : 윤인성, 김민수</p>
     <p class="mb-0">
         <a href="#">Back to top</a>
     </p>

@@ -59,10 +59,10 @@
     <br>
     <div class="content-section">
         <b>사용자 작성글</b>
-        <div class="content-value" th:text="${board.content}">내용</div>
+        <div class="content-value" th:text="${board.content}"  style="min-height: 300px; overflow: auto;">내용</div>
     </div>
 
-    <br><br><br>
+
     ★해당 게시글 삭제하기(<b>복구 불가<b>) : <a th:href="@{/manage/delete/{boardId}(boardId=${board.boardId})}"
                                    class="btn btn-danger">삭제</a>
 

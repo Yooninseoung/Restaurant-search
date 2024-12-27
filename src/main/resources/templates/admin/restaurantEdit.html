@@ -30,6 +30,7 @@
             }
         }
     </style>
+
 </head>
 <body>
 
@@ -75,7 +76,8 @@
                     <p class="lead my-3">평점 : <span th:text="${restaurant.rating}">4.5</span></p>
 
                     <div class="input-group mb-3">
-                        <input type="file" name="file">
+                        <input type="file" id="fileInput" name="file">
+                        <small id="fileWarning" style="color: red; display: none;">한글 파일 이름은 사용할 수 없습니다.</small>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
@@ -93,12 +95,10 @@
 
             </div>
 
-            <div th:if="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" src="/img/restaurantDefaultImage.jpg" alt="맛집" width="450" height="350">
-            </div>
-            <div th:unless="${restaurant.photoPath == null}">
-                <img class="bd-placeholder-img" th:src="${restaurant.photoPath}" alt="맛집" width="450" height="350">
-            </div>
+            <img class="bd-placeholder-img" width="450" height="350"
+                 th:src="@{/restaurant/RestaurantImg/{fileName}(fileName=${restaurant.photoPath})}"
+                 alt="맛집 이미지" />
+
 
         </div>
     </div>
@@ -137,24 +137,36 @@
 
 <div class="d-flex justify-content-center mt-2 my-3">
     <!-- 첫 페이지 버튼 -->
-    <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=1)}"
+    <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=1)}"
        class="btn btn-outline-secondary"> < </a>
 
     <!-- 페이지 번호 버튼 그룹 -->
     <div class="btn-group me-2 mx-2" role="group" aria-label="Page navigation">
+        <!-- 페이지 번호가 존재할 때만 출력하도록 조건 추가 -->
+        <span th:if="${startPage != null and endPage != null and startPage <= endPage}">
         <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
             <button type="button" class="btn btn-outline-secondary mx-1" th:if="${page == review.number + 1}"
                     th:text="${page}" disabled></button>
-            <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=${page})}">
+            <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${page})}">
                 <button type="button" class="btn btn-outline-secondary mx-1" th:unless="${page == review.number + 1}"
                         th:text="${page}"></button>
             </a>
+
+            <!-- 마지막 페이지 버튼 -->
+        <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
+           class="btn btn-outline-secondary"> > </a>
+
         </span>
+    </span>
+        <!-- 페이지 번호가 없을 경우 1번 페이지를 기본으로 표시 -->
+        <span th:if="${startPage == null or endPage == null or startPage > endPage}">
+        <a th:href="@{/restaurant/detailScreen(restaurantId=${restaurant.restaurantID},page=1)}">
+            <button type="button" class="btn btn-outline-secondary mx-1" th:text="1"></button>
+        </a>
+    </span>
     </div>
 
-    <!-- 마지막 페이지 버튼 -->
-    <a th:href="@{/manage/restaurantEdit(restaurantId=${restaurant.restaurantID},page=${review.totalPages})}"
-       class="btn btn-outline-secondary"> > </a>
+
 </div>
 
 
@@ -170,4 +182,27 @@
         crossorigin="anonymous"></script>
 
 </body>
+<script>
+
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+        // 업로드된 파일 가져오기
+        const file = event.target.files[0];
+        if (file) {
+            const fileName = file.name;
+
+            // 한글 포함 여부 확인
+            const containsKorean = /[가-힣]/.test(fileName);
+
+            // 경고 표시 및 처리
+            const warning = document.getElementById("fileWarning");
+            if (containsKorean) {
+                warning.style.display = "block"; // 경고 메시지 표시
+                event.target.value = ""; // 파일 입력 초기화
+            } else {
+                warning.style.display = "none"; // 경고 메시지 숨김
+            }
+        }
+    });
+</script>
+
 </html>

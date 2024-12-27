@@ -167,26 +167,26 @@
 
 <div class="container" style="margin-top: 20px;">
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-        <form class="row g-3" method="post" action="/review/writeForm" enctype="multipart/form-data">
+        <form class="row g-3" method="post" action="/review/writeForm" enctype="multipart/form-data" onsubmit="return validateReviewForm()">
             <h1 align="center">리뷰 작성</h1>
 
             <input type="hidden" name="restaurantId" th:value="${restaurantId}">
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="oneLine">한줄평</span>
-                <input type="text" class="form-control" aria-label="oneLine" aria-describedby="oneLine"
-                       name="OneLineReview">
+                <input type="text" class="form-control" aria-label="oneLine" aria-describedby="oneLine" name="OneLineReview" id="OneLineReview">
+                <p id="oneLineError" style="color: red; font-size: 0.9em;"></p>
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="grade">평점</span>
-                <input type="number" class="form-control" aria-label="grade" aria-describedby="grade" name="rating"
-                       step="0.1">
+                <input type="number" class="form-control" aria-label="grade" aria-describedby="grade" name="rating" id="rating" step="0.1" placeholder="0.1 ~ 9.9 사이의 평점을 남겨주세요">
+                <p id="ratingError" style="color: red; font-size: 0.9em;"></p>
             </div>
 
-
             <div class="input-group mb-3">
-                <input type="file" name="file">
+                <input type="file" id="fileInput" name="file">
+                <small id="fileWarning" style="color: red; display: none;">한글 파일 이름은 사용할 수 없습니다.</small>
             </div>
 
             <div class="col-12" align="center">
@@ -196,18 +196,74 @@
     </div>
 </div>
 
-<footer class="py-5 text-center text-body-secondary bg-body-tertiary">
-    <p>테스트 중..</p>
+<footer style="background-color: #f8f9fa; padding: 20px; text-align: center; position: relative; transform: translateY(0%);">
+    <p>식당 등록과 문의사항 : isyoon2000@naver.com</p>
+    <p>백엔드 개발자 : 윤인성, 김민수</p>
     <p class="mb-0">
         <a href="#">Back to top</a>
     </p>
 </footer>
+
+<script>
+    function validateReviewForm() {
+    const oneLineReview = document.getElementById("OneLineReview").value.trim();
+    const rating = parseFloat(document.getElementById("rating").value);
+    const oneLineError = document.getElementById("oneLineError");
+    const ratingError = document.getElementById("ratingError");
+
+    let isValid = true;
+
+    // 한줄평 검사: 최소 3자 이상
+    if (oneLineReview.length < 3) {
+        oneLineError.textContent = "한줄평은 최소 3자 이상이어야 합니다.";
+        isValid = false;
+    } else {
+        oneLineError.textContent = "";
+    }
+
+    // 평점 검사: 0.0 ~ 9.9 범위 확인
+    if (isNaN(rating) || rating < 0.1 || rating > 9.9) {
+        ratingError.textContent = "평점은 0.1에서 9.9 사이의 값을 입력하세요.";
+        isValid = false;
+    } else {
+        ratingError.textContent = "";
+    }
+
+    return isValid; // 모든 조건 만족 시 true 반환
+}
+
+</script>>
+
+<script>
+
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+        // 업로드된 파일 가져오기
+        const file = event.target.files[0];
+        if (file) {
+            const fileName = file.name;
+
+            // 한글 포함 여부 확인 (정규 표현식 사용)
+            const containsKorean = /[가-힣]/.test(fileName);
+
+            // 경고 표시 및 처리
+            const warning = document.getElementById("fileWarning");
+            if (containsKorean) {
+                warning.style.display = "block"; // 경고 메시지 표시
+                event.target.value = ""; // 파일 입력 초기화
+            } else {
+                warning.style.display = "none"; // 경고 메시지 숨김
+            }
+        }
+    });
+</script>
+
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
 
 </body>
 </html>

@@ -7,10 +7,14 @@ import com.restaurant.Restaurant_search.service.CommentService;
 import com.restaurant.Restaurant_search.service.ReportService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -85,7 +89,10 @@ public class BoardController {
 
     // 게시글 작성 페이지를 보여주는 메소드
     @GetMapping("write")
-    public String showFreeBoardWritePage() {
+    public String showFreeBoardWritePage(@SessionAttribute(name = "userId", required = false) String userId) throws IOException {
+        if(userId==null){
+            return "redirect:/user/login";
+        }
         return "board/freeBoardWrite"; // "board/freeBoardWrite.html"을 반환
     }
 
@@ -96,9 +103,6 @@ public class BoardController {
                             HttpSession session) throws IOException {
         // 세션에서 username 가져오기
         String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login"; // 로그인 페이지로 리다이렉트
-        }
         board.setUsername(username); // 세션에서 username을 가져와서 설정
 
         boardService.writeBoard(board, file, username); // 게시글과 파일을 저장
@@ -235,6 +239,26 @@ public class BoardController {
 
         return "redirect:/board/detail/" + boardId;
 
+    }
+
+    @GetMapping("/BoardImg/{fileName}") //게시글 사진을 반환
+    public ResponseEntity<Resource> getBoardImage(@PathVariable("fileName") String fileName) {
+        // 실제 파일 경로 설정
+        File file = new File("C:/GangwonCookImg/BoardImg/" + fileName);
+
+        // 파일이 존재하는지 확인
+        if (!file.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+
+        // 파일을 리소스로 변환
+        Resource resource = new FileSystemResource(file);
+
+        // 이미지 파일을 클라이언트로 반환
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + fileName)
+                .body(resource);
     }
 
 }

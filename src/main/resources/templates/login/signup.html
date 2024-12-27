@@ -21,15 +21,19 @@
 
 <div class="container">
 
-    <form class="row g-3" method="post" action="/user/signUp">
+    <form class="row g-3" method="post" action="/user/signUp" onsubmit="return validateForm()">
         <h1 align="center">회원가입</h1>
         <div class="col-md-6">
             <label for="uId" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="uId" name="userID">
+            <input type="text" class="form-control" id="uId" name="userID" oninput="resetIDCheckStatus()">
+            <small class="text-danger" id="uIdError"></small>
+            <small class="text-success" id="uIdSuccess"></small>
+            <button type="button" class="btn btn-primary mt-2" onclick="checkDuplicateID()">중복 확인</button>
         </div>
         <div class="col-md-6">
             <label for="uPassword" class="form-label">비밀번호</label>
             <input type="password" class="form-control" id="uPassword" name="password">
+            <small class="text-danger" id="uPasswordError"></small>
         </div>
         <div class="col-md-6">
             <label for="uName" class="form-label">이름</label>
@@ -42,18 +46,96 @@
         <div class="col-md-6">
             <label for="uPhone" class="form-label">전화 번호</label>
             <input type="tel" class="form-control" id="uPhone" name="phoneNumber">
+            <small class="text-danger" id="uPhoneError"></small>
         </div>
         <div class="col-12">
             <label for="uAdress" class="form-label">주소</label>
             <input type="text" class="form-control" id="uAdress" name="address">
+            <small class="text-danger" id="uAddressError"></small>
         </div>
-
-
         <div class="col-12" align="center">
-            <button type="submit" class="btn btn-secondary">회원가입</button>
+            <button type="submit" class="btn btn-secondary" id="signUpBtn" disabled>회원가입</button>
         </div>
     </form>
 </div>
+
+    <script>
+        let isIDChecked = false; // 중복 확인 버튼 클릭 여부
+        let isIDValid = false;   // 중복 여부 결과 저장
+
+        function resetIDCheckStatus() {
+            isIDChecked = false; // 아이디 변경 시 중복 확인 상태 초기화
+            document.getElementById("uIdError").textContent = "";
+            document.getElementById("uIdSuccess").textContent = "";
+            document.getElementById("signUpBtn").disabled = true; // 회원가입 버튼 비활성화
+        }
+
+        function checkDuplicateID() {
+            const userID = document.getElementById("uId").value.trim();
+            const userIDError = document.getElementById("uIdError");
+            const userIDSuccess = document.getElementById("uIdSuccess");
+
+            if (userID.length < 5) {
+                userIDError.textContent = "아이디는 5자 이상이어야 합니다.";
+                userIDSuccess.textContent = "";
+                isIDChecked = false;
+                return;
+            }
+
+            // 서버에 중복 확인 요청
+            fetch(`/user/checkDuplicateID?userID=${encodeURIComponent(userID)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isDuplicate) {
+                        userIDError.textContent = "이미 사용 중인 아이디입니다.";
+                        userIDSuccess.textContent = "";
+                        isIDValid = false;
+                    } else {
+                        userIDError.textContent = "";
+                        userIDSuccess.textContent = "사용 가능한 아이디입니다.";
+                        isIDValid = true;
+                        isIDChecked = true; // 중복 확인 완료
+                        updateSignUpButtonStatus();
+                    }
+
+                })
+                .catch(error => {
+                    console.error("아이디 중복 확인 오류:", error);
+                    userIDError.textContent = "중복 확인 중 오류가 발생했습니다.";
+                    userIDSuccess.textContent = "";
+                    isIDChecked = false;
+                });
+        }
+
+        function updateSignUpButtonStatus() {
+            // 중복 확인 완료 및 유효한 경우 회원가입 버튼 활성화
+            const signUpButton = document.getElementById("signUpBtn");
+            signUpButton.disabled = !(isIDChecked && isIDValid);
+        }
+
+        function validateForm() {
+            // 최종 폼 제출 시 중복 확인 여부 확인
+            if (!isIDChecked) {
+                alert("아이디 중복 확인을 완료해 주세요.");
+                return false;
+            }
+
+            // 기존 유효성 검사 로직
+            let isValid = true;
+
+            const password = document.getElementById("uPassword").value.trim();
+            const passwordError = document.getElementById("uPasswordError");
+            if (password.length < 8) {
+                passwordError.textContent = "비밀번호는 8자 이상이어야 합니다.";
+                isValid = false;
+            } else {
+                passwordError.textContent = "";
+            }
+
+            return isValid;
+        }
+    </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
